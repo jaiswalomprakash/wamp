@@ -18,11 +18,12 @@ var myApp = angular.module('myApp', [
 
 
 myApp.constant('APP_BASE_URL',"http://api.tangerine.io/inboundhtml/");
-myApp.constant('API_BASE_URL',"http://localhost:8080/webservices/");
+myApp.constant('API_BASE_URL',"http://localhost:8080/mywebs/");
 myApp.constant('INTERVAL',5000);
 myApp.constant('DEFAULT_LANG','ja');
 myApp.constant('DEFAULT_LAT','35.6833');
 myApp.constant('DEFAULT_LONG','139.6833');
+myApp.constant('TOKEN','');
 
 var storeGlobalVal=[];
 storeGlobalVal.push({"language":"n/a","gStoreId":1,"gOrderLocalStorage":"orderStoreHistory_","grandMenuItemPrice":"grandMenuItemPrice_"});
@@ -41,8 +42,10 @@ myApp.constant('API_Local_URL',"http://localhost:8081/tangerine_inbound/");
 myApp.config(function($urlRouterProvider, $httpProvider) {
 	
   //session check and redirect to specific state
-  $httpProvider.defaults.useXDomain = true;
-  delete $httpProvider.defaults.headers.common['X-Requested-With'];
+  // $httpProvider.interceptors.push("CORSInterceptor");
+  //$httpProvider.defaults.useXDomain = true;
+   //$httpProvider.defaults.headers["Access-Control-Request-Headers"] = "X-Requested-With, accept, content-type";
+ // delete $httpProvider.defaults.headers.common['X-Requested-With'];
   if(!window.sessionStorage["userInfo"]){
 	$urlRouterProvider.otherwise("/login");  
   }else{
@@ -52,12 +55,19 @@ myApp.config(function($urlRouterProvider, $httpProvider) {
 });
 
 //Run phase
-myApp.run(function($rootScope, $state) {
+myApp.run(function($rootScope, $state,$http) {
 	$rootScope.$state = $state; //Get state info in view
 	
 	
 	if(window.sessionStorage["userInfo"]){
-		$rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);
+	   $rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);	 	  
+	   $rootScope.serviceID=$rootScope.userInfo.serviceID;
+	   $rootScope.token=$rootScope.userInfo.token;	   
+	   
+	   $http.defaults.headers.common['token'] =$rootScope.userInfo.token;	
+				   $http.defaults.headers.common['serviceID'] =$rootScope.userInfo.serviceID;	
+				   $http.defaults.headers.common['userId'] =$rootScope.userInfo.userId;
+		
 	}
 	
 		   
@@ -75,6 +85,22 @@ myApp.run(function($rootScope, $state) {
 		}
 	});
 });
+
+myApp.factory("CORSInterceptor", [
+    function()
+    {
+        return {
+            request: function(config)
+            {
+                 config.headers["Access-Control-Allow-Origin"] = "*";
+                 config.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS";
+                 config.headers["Access-Control-Allow-Headers"] = "Content-Type";
+                 config.headers["Access-Control-Request-Headers"] = "X-Requested-With, accept, content-type,X-auth-token";
+                 return config;
+            }
+     };
+}
+]);
 
 myApp.factory('httpRequestInterceptor', function ($q, $location) {
   return {
@@ -147,6 +173,23 @@ myApp.directive('fileModel', ['$parse', function ($parse) {
                }
             };
          }]);
+		 
+myApp.directive('valid-number', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope) {    
+            scope.$watch('wks.number', function(newValue,oldValue) {
+                var arr = String(newValue).split("");
+                if (arr.length === 0) return;
+                if (arr.length === 1 && (arr[0] == '-' || arr[0] === '.' )) return;
+                if (arr.length === 2 && newValue === '-.') return;
+                if (isNaN(newValue)) {
+                    scope.wks.number = oldValue;
+                }
+            });
+        }
+    };
+});
 //For top sub menu (look others menu)
 $(function () {
 	$('.subnavbar').find ('li').each (function (i) {

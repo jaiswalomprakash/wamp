@@ -51,7 +51,7 @@ myApp.factory('userServices', ['$http', function($http) {
 //Controllers
 
 
-myApp.controller('loginController', ['$scope', 'Login', '$location', '$rootScope', function($scope, userServices, $location, $rootScope) {
+myApp.controller('loginController', ['$scope', 'Login', '$location', '$rootScope','$http', function($scope, userServices, $location, $rootScope,$http) {
 	
 	
 	//$scope.login = {"email":"mail2asik@gmail.com", "password": "mypassword"};
@@ -60,16 +60,16 @@ myApp.controller('loginController', ['$scope', 'Login', '$location', '$rootScope
 		
 		if ($scope.loginForm.$valid) {
 			
-			userServices.get({email: $scope.login.email,password: $scope.login.password},function(result) {
-				alert(JSON.stringify(result));
+			userServices.get({email: $scope.login.email,password: $scope.login.password},function(result) {				
 				$scope.data = result;
 				$scope.prakash = "op";
 				
 				if (!result.error) {					
-				  window.sessionStorage["userInfo"] = JSON.stringify(result);
-				  alert("op "+JSON.stringify(result));
-				  $rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);
-  				  $location.path("/dashboard");
+				  window.sessionStorage["userInfo"] = JSON.stringify(result);				 
+				  $rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);				   
+  				  //$location.path("/dashboard");
+				  $location.path("/addDailyservice");
+				  
 				}
 			}, function(errorResult) {
 				// do something on error	

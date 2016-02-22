@@ -5,8 +5,28 @@ angular.module('myApp.services', ['ngResource']);
 //fetch products for shopping department service; online version:
 angular.module('myApp.services').factory('Login', function($resource,API_BASE_URL) {	
 	 //return $resource(API_BASE_URL+'Console/Login', 
-	  return $resource(API_BASE_URL+'menuService/getMenuData', 
+	  return $resource(API_BASE_URL+'userService/Login', 
 	            {eamil:'@email',password:'@password'}, {});
+ // return $resource('partials/users/mock/login.json'); // Note the full endpoint address
+
+ 
+});
+
+angular.module('myApp.services').factory('StoreDailyService', function($resource,API_BASE_URL) {	
+     
+	 return $resource(API_BASE_URL+'dailyService/storeDailyRecords', 
+	            {},{ update: {method : "POST"}
+    });
+ // return $resource('partials/users/mock/login.json'); // Note the full endpoint address
+
+ 
+});
+
+angular.module('myApp.services').factory('GetDailyService', function($resource,API_BASE_URL) {	
+     
+	 return $resource(API_BASE_URL+'dailyService/getDailyRecords', 
+	            {},{ update: {method : "POST"}
+    });
  // return $resource('partials/users/mock/login.json'); // Note the full endpoint address
 
  
