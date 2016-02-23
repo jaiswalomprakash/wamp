@@ -61,12 +61,21 @@ myApp.controller('loginController', ['$scope', 'Login', '$location', '$rootScope
 		if ($scope.loginForm.$valid) {
 			
 			userServices.get({email: $scope.login.email,password: $scope.login.password},function(result) {				
-				$scope.data = result;
-				$scope.prakash = "op";
+				$scope.data = result;		
 				
 				if (!result.error) {					
 				  window.sessionStorage["userInfo"] = JSON.stringify(result);				 
-				  $rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);				   
+				  $rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);
+				   $rootScope.selectedService = $scope.data.services[0];				   
+				   console.log( $scope.data.services[0]);
+				   
+					$rootScope.serviceID=$rootScope.userInfo.services[0].serviceID;	    
+					console.log("$rootScope.userInfo.services[0].serviceId--------"+$rootScope.userInfo.services[0].serviceId);
+					$rootScope.token=$rootScope.userInfo.token;	
+					
+					$http.defaults.headers.common['token'] =$rootScope.userInfo.token;	
+					$http.defaults.headers.common['serviceID'] =$rootScope.userInfo.services[0].serviceId;
+					$http.defaults.headers.common['userId'] =$rootScope.userInfo.userId;				  
   				  //$location.path("/dashboard");
 				  $location.path("/addDailyservice");
 				  
@@ -98,6 +107,13 @@ myApp.controller('signupController', ['$scope', 'userServices', '$location', fun
 			});	
 		}
 	}
+}]);
+
+myApp.controller('ServiceCtrl', ['$scope', '$location', '$rootScope', function($scope, $location, $rootScope) {	
+	 $scope.selectService = function(service) {
+	 $rootScope.selectedService = service;	
+	 $location.path("/dashboard");
+};
 }]);
 
 myApp.controller('logoutController', ['$scope', '$location', '$rootScope', function($scope, $location, $rootScope) {

@@ -57,17 +57,19 @@ myApp.config(function($urlRouterProvider, $httpProvider) {
 //Run phase
 myApp.run(function($rootScope, $state,$http) {
 	$rootScope.$state = $state; //Get state info in view
-	
-	
+		console.log("run condition");	
 	if(window.sessionStorage["userInfo"]){
-	   $rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);	 	  
-	   $rootScope.serviceID=$rootScope.userInfo.serviceID;
-	   $rootScope.token=$rootScope.userInfo.token;	   
-	   
+	   console.log("if condition");
+	   $rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);	
+	   $rootScope.selectedService =  $rootScope.userInfo.services[0];	   
+	   $rootScope.serviceID=$rootScope.userInfo.services[0].serviceId;
+	     console.log(" =$rootScope.userInfo.service "+$rootScope.userInfo.services[0].serviceId);
+	   $rootScope.token=$rootScope.userInfo.token;	   	 
 	   $http.defaults.headers.common['token'] =$rootScope.userInfo.token;	
-				   $http.defaults.headers.common['serviceID'] =$rootScope.userInfo.serviceID;	
-				   $http.defaults.headers.common['userId'] =$rootScope.userInfo.userId;
-		
+	   $http.defaults.headers.common['serviceID'] =$rootScope.userInfo.services[0].serviceId;
+	   $http.defaults.headers.common['userId'] =$rootScope.userInfo.userId;		
+	}else{		
+		console.log("else condition");
 	}
 	
 		   
