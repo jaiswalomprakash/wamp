@@ -3,14 +3,19 @@
 angular.module('dashboard', []);
 
 //Routers
-myApp.config(function($stateProvider) {
+myApp.config(function($stateProvider,$locationProvider) {
   $stateProvider.state('dashboard', {
 	url: '/dashboard',
     templateUrl: 'partials/dashboard/dashboard.html',	
+	ncyBreadcrumb: {
+    label: 'Home page'
+  },
 	data:{
 		auth:true
 	}
   });
+  
+  
   
 });
 

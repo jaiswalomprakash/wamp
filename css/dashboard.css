@@ -152,14 +152,13 @@ transition: all .2s ease-in-out;
 		
 			.center-menu ul.nav-stacked li a:hover
 			{
-				color:#fff;	
-				opacity:0.8;
+				background-color:transparent;
 				
-				webkit-transition: all .2s ease-in-out;
-	-moz-transition: all .2s ease-in-out;
-	-ms-transition: all .2s ease-in-out;
-	-o-transition: all .2s ease-in-out;
-	transition: all .2s ease-in-out;
+					webkit-transition: all .5s ease-in-out;
+	-moz-transition: all .5s ease-in-out;
+	-ms-transition: all .5s ease-in-out;
+	-o-transition: all .5s ease-in-out;
+	transition: all .5s ease-in-out;
 	
 			}
 			
@@ -172,11 +171,26 @@ transition: all .2s ease-in-out;
 		.center-menu ul.nav-stacked li a img
 		{
 			margin-bottom:0px;
-			width:100%;
+			width:30%;
 			height:100%;
 			
+			webkit-transition: all .5s ease-in-out;
+	-moz-transition: all .5s ease-in-out;
+	-ms-transition: all .5s ease-in-out;
+	-o-transition: all .5s ease-in-out;
+	transition: all .5s ease-in-out;
+			
 		}
-		
+		.center-menu ul.nav-stacked li a img:hover
+		{
+			opacity:0.5;
+			
+			webkit-transition: all .5s ease-in-out;
+	-moz-transition: all .5s ease-in-out;
+	-ms-transition: all .5s ease-in-out;
+	-o-transition: all .5s ease-in-out;
+	transition: all .5s ease-in-out;
+		}
 		
 		
 		.center-menu ul.nav-stacked > li + li
@@ -434,4 +448,49 @@ margin-bottom: 26px;}
 .center-menu .nav-pills.nav-stacked > li > a
 {
 	margin-bottom: 0px;
+}
+
+.extra-margin{
+	margin-top:10px !important;
+}
+
+
+@media (min-width:650px){
+	.nav-collapse{
+	display:block;
+}
+
+
+
+.navbar .nav.pull-right .dropdown-menu::before, .navbar .nav .dropdown-menu.pull-right::before {
+    left: auto;
+    right: 12px;
+}
+.navbar .dropdown-menu::before {
+    border-bottom: 7px solid rgba(0, 0, 0, 0.2);
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    content: "";
+    display: inline-block;
+    left: 9px;
+    position: absolute;
+    top: -7px;
+}
+.navbar .nav.pull-right .dropdown-menu::after, .navbar .nav .dropdown-menu.pull-right::after {
+    left: auto;
+    right: 13px;
+}
+.navbar .dropdown-menu::after {
+    border-bottom: 6px solid #ffffff;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    content: "";
+    display: inline-block;
+    left: 10px;
+    position: absolute;
+    top: -6px;
+}
+.navbar .nav.pull-right .dropdown-menu, .navbar .nav .dropdown-menu.pull-right {
+    left: auto;
+    right: 0;
 }

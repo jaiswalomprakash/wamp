@@ -90,10 +90,15 @@ textarea {
 	font-size: 11px;
 }
 .navbar .nav>li>a { color:#fff !important;}
-.navbar .brand {
+.navbar a.brand {
 	font-weight: 600;
 	position: relative;
 	top: 2px;
+	font-size:1.308em;
+	color:#fff;
+}
+.navbar a.brand:hover{
+	text-decoration:none;
 }
 
 .navbar .search-query {
@@ -273,7 +278,7 @@ textarea {
 }
 
 .extra-inner {
-	padding: 20px 0;
+	padding: 10px 0;
 	
 	font-size: 11px;
 	color: #BBB;
@@ -374,7 +379,7 @@ textarea {
 }	
 	
 	.widget-header h3 {
-		
+		 margin-top: 10px;
 		position: relative;
 		top: 2px;
 		left: 10px;
@@ -1297,3 +1302,4 @@ table + div[ng-include] { padding: 0 5px; }
 .nav,.pagination,.carousel,.panel-title a {
 	cursor:pointer
 }
+

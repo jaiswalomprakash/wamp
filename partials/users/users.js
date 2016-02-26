@@ -8,21 +8,31 @@ myApp.config(function($stateProvider) {
   $stateProvider.state('login', {
 	url: "/login",
     templateUrl: 'partials/users/login.html',
-	controller: 'loginController'
+	controller: 'loginController',
+	ncyBreadcrumb: {
+    label: 'Login'
+  }
+	
   });
   
   //Signup
   $stateProvider.state('signup', {
 	url: "/signup",
     templateUrl: 'partials/users/signup.html',
-	controller: 'signupController'
+	controller: 'signupController',
+	ncyBreadcrumb: {
+    label: 'Signup'
+  }
   });
   
   //Logout
   $stateProvider.state('logout', {
 	url: "/logout",
 	template: "<h3>Logging out...</h3>",
-    controller: 'logoutController'
+    controller: 'logoutController',
+	ncyBreadcrumb: {
+    label: 'Logout'
+  }
   });
   
 });
@@ -121,3 +131,4 @@ myApp.controller('logoutController', ['$scope', '$location', '$rootScope', funct
 	$rootScope.userInfo = false;
 	$location.path("/login");
 }]);
+

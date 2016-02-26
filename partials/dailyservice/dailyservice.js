@@ -1,23 +1,30 @@
 'use strict';
 angular.module('dailyservice', ['ngTable']);
+
 //Routers
-myApp.config(function($stateProvider) {
+myApp.config(function($stateProvider,$urlRouterProvider) {
  //Search Customers
   $stateProvider.state('dailyservice', {
-	url: '/dailyservice',
+	url: '/dailyservice',	
     templateUrl: 'partials/dailyservice/dailyservice.html',
 	data:{
 		auth:true
-	}
+	},ncyBreadcrumb: {
+    label: 'Daily Expense & Collection'
+  }
   });
   
   //Add Customer
   $stateProvider.state('addDailyservice', {
-	url: '/addDailyservice',
+	url: '/addDailyservice',	
     templateUrl: 'partials/dailyservice/addDailyservice.html',
 	data:{
 		auth:true
-	}
+	},
+	ncyBreadcrumb: {
+	parent: 'dailyservice',
+    label: 'Add Daily Expense & Collection'
+  }
   });
   
   

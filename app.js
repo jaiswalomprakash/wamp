@@ -6,10 +6,11 @@ var myApp = angular.module('myApp', [
   'ui.router',
   'ui.bootstrap',
   'validation', 
-  'validation.rule',   
+  'validation.rule',  
   'users', 
   'ngRoute',
   'ngSanitize',
+  'ncy-angular-breadcrumb',
   'dashboard',
   'myApp.services',
   'reports',
@@ -39,8 +40,22 @@ myApp.constant('STORE_FAV_URL','#/storeDetails?store_id=');
 	
 myApp.constant('API_Local_URL',"http://localhost:8081/tangerine_inbound/");
 //Config phase
-myApp.config(function($urlRouterProvider, $httpProvider) {
+myApp.config(function($urlRouterProvider, $httpProvider,$breadcrumbProvider, $locationProvider) {
 	
+	$breadcrumbProvider.setOptions({
+      template: 'bootstrap2'
+    });
+	/*if(window.history && window.history.pushState){
+            //$locationProvider.html5Mode(true); will cause an error $location in HTML5 mode requires a  tag to be present! Unless you set baseUrl tag after head tag like so: <head> <base href="/">
+
+         // to know more about setting base URL visit: https://docs.angularjs.org/error/$location/nobase
+
+         // if you don't wish to set base URL then use this
+         $locationProvider.html5Mode({
+                 enabled: true,
+                 requireBase: false
+          });
+        } */
   //session check and redirect to specific state
   // $httpProvider.interceptors.push("CORSInterceptor");
   //$httpProvider.defaults.useXDomain = true;
@@ -53,6 +68,8 @@ myApp.config(function($urlRouterProvider, $httpProvider) {
   }
     
 });
+
+
 
 //Run phase
 myApp.run(function($rootScope, $state,$http) {
@@ -103,6 +120,7 @@ myApp.factory("CORSInterceptor", [
      };
 }
 ]);
+
 
 myApp.factory('httpRequestInterceptor', function ($q, $location) {
   return {
