@@ -2,55 +2,49 @@
 <div class="span12">
   <div class="widget widget-nopad">
 	<div class="widget-header"> <i class="icon-list-alt"></i>
-	  <h3> Add Daily Expenses&Collection</h3> 
+	  <h3> Add Daily Expenses & Collection</h3> 
 	</div>
 	<!-- /widget-header -->
 	<div class="widget-content">
 	  <div class="widget big-stats-container">
 		<div class="widget-content" style="padding:10px;" ng-controller="addDailyserviceController">
 		
-		  <div>
-		  
-				<form id="edit-profile" novalidate name="addDailyserviceForm" autocomplete="off" class="form-horizontal">
-					<fieldset>
-						
+		 <form id="edit-profile" novalidate name="addDailyserviceForm" autocomplete="off" class="form-horizontal">
+			<div class="form-group has-success">
+				<label class="col-lg-2 col-sm-12 col-xs-12 control-label" for="inputSuccess">Collection Type</label>
+				<div class="col-lg-5 col-sm-12 col-xs-10">					
+					<select name="type" ng-model="dailyservice.type" 
+			  validator="required" required-error-message="Collection Type is required" valid-method="watch" class="form-control"  title="Choose 2-4 colors">
+						<option value="">Select Collection Type</option>
+						<option value="1">Daily Collection</option>
+						<option value="2" selected >Daily Expenses</option>		
+					</select>
 					
-							<div class="control-group">											
-							<label class="control-label" for="type">Collection Type<sup>*</sup></label>
-							<div class="controls">
-								<select class="span4" name="type" ng-model="dailyservice.type" 
-			  validator="required" required-error-message="Collection Type is required" valid-method="watch">
-								<option value="">Select Collection Type</option>
-								<option value="1">Daily Collection</option>
-								<option value="2" selected >Daily Expenses</option>							
-								</select>
-							</div> <!-- /controls -->				
-						</div> <!-- /control-group -->
-					
-						
-						<div class="control-group">											
-							<label class="control-label" for="phone">Amount<sup>*</sup></label>
-							<div class="controls">
-								<input type="number" class="span4" name="price" placeholder="Amount" ng-model="dailyservice.price" 
+				</div>
+			</div>
+			<div class="form-group has-success">
+				<label class="col-lg-2 col-sm-12 col-xs-12 control-label" for="inputWarning">Amount</label>
+				<div class="col-lg-5 col-sm-12 col-xs-10">
+					<input type="number" class="form-control"  name="price" placeholder="Amount" ng-model="dailyservice.price" 
 			  validator="required" required-error-message="Amount is required"  />
-							</div> <!-- /controls -->				
-						</div> <!-- /control-group -->
-						
-						<div class="control-group">											
-							<label class="control-label" for="itemDesc">Description</label>
-							<div class="controls">
-								<textarea class="span4" name="itemDesc" placeholder="Description" ng-model="dailyservice.itemDesc" />
-							</div> <!-- /controls -->				
-						</div> <!-- /control-group -->
-						
-					
-							
-						<div class="form-actions">
+				</div>
+			</div class="form-group has-success">
+			<div class="form-group has-success">
+				<label class="col-lg-2 col-sm-12 col-xs-12 control-label" for="inputError">Description</label>
+				<div class="col-lg-5 col-sm-12 col-xs-10">					
+					<textarea class="form-control" name="itemDesc" placeholder="Description" ng-model="dailyservice.itemDesc" />
+				</div>
+			</div>
+			
+			<div class="form-group">
+					<div class="col-xs-offset-0 col-xs-12 col-lg-offset-2 col-lg-10">
 							<button type="button" class="btn btn-success" validation-submit="addDailyserviceForm" ng-click="addDailyservice()">Save</button> 
 							<button ng-click="cancel()" class="btn">Cancel</button>
-						</div> <!-- /form-actions -->
-					</fieldset>
-				</form>
+					</div>		
+			</div>
+		</form>
+		  
+				
 											
 		  </div>
 		

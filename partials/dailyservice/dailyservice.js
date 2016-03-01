@@ -63,7 +63,7 @@ myApp.controller('GetDailyServiceController', ['$scope', 'GetDailyService', 'dat
 			console.log("token ="+$rootScope.token);
 			console.log("serviceID ="+$rootScope.serviceID);
 			console.log("itemDesc ="+$scope.dailyservice.itemDesc);
-			var dailyservice ={"active":1,"itemDesc":$scope.dailyservice.itemDesc,"price":JSON.parse($rootScope.serviceID)};
+			var dailyservice ={"active":1,"itemDesc":$scope.dailyservice.itemDesc,"itemDesc":$scope.dailyservice.itemDesc,"price":JSON.parse($rootScope.serviceID)};
 			var dailyservice1 ={services:{"serviceId" :1},"active":1,"itemDesc":$scope.dailyservice.itemDesc,"price":JSON.parse($rootScope.serviceID)};
 		userServices.save(dailyservice,function(result) {	
 				$scope.data = result;

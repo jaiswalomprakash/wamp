@@ -83,7 +83,9 @@ textarea {
 }
 
 .navbar-fixed-top {
-	position: static;
+	/* position: static; */
+	 position: fixed;
+	
 }
 
 .navbar .nav a {
@@ -260,7 +262,7 @@ textarea {
 
 .main {
 	padding-bottom: 2em;
-	
+	margin-top:8em;
 	border-bottom: 1px solid #000;
 }
 
@@ -1292,8 +1294,10 @@ color: #333;
 	
 }
 
-.validation-invalid {
-	color:red
+.validation-invalid {	
+	bottom: -30px;
+    color: red;
+    position: absolute;
 }
 
 table + div[ng-include] { padding: 0 5px; }
@@ -1302,4 +1306,26 @@ table + div[ng-include] { padding: 0 5px; }
 .nav,.pagination,.carousel,.panel-title a {
 	cursor:pointer
 }
+.has-success .form-control {  
+    margin-top: 5px;
+}
 
+@media only screen and (max-width:650px) {
+	.footer-center{
+		text-align:center !important;
+	}
+	.extra {
+    margin-left: 0px;
+    margin-right:0px;
+	}
+	.main {	
+	margin-top:10em !important;
+	
+  }
+  
+  .navbar-fixed-top {
+	/* position: static; */
+	 position: fixed;	
+  }
+}
+ /* end media query  */
