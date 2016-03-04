@@ -19,6 +19,13 @@
 	<link href="css/style.css" rel="stylesheet">
 	<link href="css/dashboard.css" rel="stylesheet">
 	<link href="css/signin.css" rel="stylesheet">
+	<link href="css/angular-datepicker.css" rel="stylesheet">
+	<link href="css/angular-datepicker.css" rel="stylesheet">
+	<link href="css/angular-responsive-tables.css" rel="stylesheet">
+	
+	
+	
+	
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -28,8 +35,7 @@
 </head>
 <body>
    <div ng-include="'partials/common/loginHeader.html'" ng-show="!userInfo"></div> <!-- loginHeader -->
-   <div ng-include="'partials/common/userHeader.html'" ng-show="userInfo"></div> <!-- userHeader -->	
-   	
+   <div ng-include="'partials/common/userHeader.html'" ng-show="userInfo"></div> <!-- userHeader -->	  
    <div class="main">
 		<div class="main-inner">	
 			<div class="container" ui-view>
@@ -54,6 +60,11 @@
 	<script src="bower_components/angular/angular-sanitize.min.js"></script>	
 	
 	<script src="bower_components/angular/angular-breadcrumb.js"></script>
+	<script src="bower_components/angular/angular-datepicker.js"></script>
+	<script src="bower_components/angular/angular-responsive-tables.js"></script>
+	
+	
+
 	
 	
 

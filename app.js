@@ -11,6 +11,8 @@ var myApp = angular.module('myApp', [
   'ngRoute',
   'ngSanitize',
   'ncy-angular-breadcrumb',
+  '720kb.datepicker',
+  'wt.responsive',
   'dashboard',
   'myApp.services',
   'reports',
@@ -80,6 +82,7 @@ myApp.run(function($rootScope, $state,$http) {
 	   $rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);	
 	   $rootScope.selectedService =  $rootScope.userInfo.services[0];	   
 	   $rootScope.serviceID=$rootScope.userInfo.services[0].serviceId;
+	    $rootScope.userName=$rootScope.userInfo.realname;
 	     console.log(" =$rootScope.userInfo.service "+$rootScope.userInfo.services[0].serviceId);
 	   $rootScope.token=$rootScope.userInfo.token;	   	 
 	   $http.defaults.headers.common['token'] =$rootScope.userInfo.token;	
@@ -210,6 +213,12 @@ myApp.directive('valid-number', function () {
         }
     };
 });
+myApp.filter('currentdate',['$filter',  function($filter) {
+    return function() {
+        return $filter('date')(new Date(), 'yyyy-MM-dd');
+    };
+}])
+
 //For top sub menu (look others menu)
 $(function () {
 	$('.subnavbar').find ('li').each (function (i) {
@@ -219,3 +228,12 @@ $(function () {
 		}
 	});
 });
+
+$(document).on('click','.nav-collapse.in',function(e) {
+
+    if( $(e.target).is('a') && ( $(e.target).attr('class') != 'dropdown-toggle' ) ) {
+        $(this).collapse('hide');
+    }
+
+});
+

@@ -1,5 +1,9 @@
 <div class="account-container">
-	
+	<style>	
+	.main {	
+	     margin-top:3em !important;
+	  }
+	</style>
 	<div class="content clearfix">
 		
 		<form novalidate name="loginForm" autocomplete="off">
@@ -12,11 +16,11 @@
 	
 				<div class="input-group input-group-lg">				  
 				<span class="input-group-addon clearfix" id="sizing-addon1" ><span class="glyphicon glyphicon-user"></span></span>				  
-				  <input type="text" name="email" class="form-control" placeholder="Email" aria-describedby="sizing-addon1" ng-model="login.email" 	validator="required,email" required-error-message="Email is required" email-error-message="Invalid email address" valid-method="watch">
+				  <input type="text" name="email" class="form-control" placeholder="Email/Mobile" aria-describedby="sizing-addon1" ng-model="login.email" 	validator="required" required-error-message="Email is required" email-error-message="Invalid email address" valid-method="watch">
 				</div>
 				<br>
 				<div class="input-group input-group-lg">
-				  <span class="input-group-addon clearfix" id="sizing-addon1" ><span class="glyphicon glyphicon-lock"></span></span>				  			  
+				  <span class="input-group-addon clearfix" id="sizing-addon1" ><span class="glyphicon glyphicon-log-in"></span></span>				  			  
 				  <input type="password" name="password" class="form-control"  aria-describedby="sizing-addon1" type="password" name="password" value="" placeholder="Password" class="login password-field" ng-model="login.password" validator="required" required-error-message="Password is required" valid-method="watch">
 				</div>
 				<br>

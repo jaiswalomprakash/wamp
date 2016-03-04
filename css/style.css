@@ -1256,6 +1256,11 @@ color: #333;
     
 
 
+.odd {
+      background-color: #ccc !important;
+  }
+           
+
 
 
 /*------------------------------------------------------------------
@@ -1309,6 +1314,24 @@ table + div[ng-include] { padding: 0 5px; }
 .has-success .form-control {  
     margin-top: 5px;
 }
+@media only screen and (max-width:650px) {
+    .nav-collapse.collapse {
+        display: none !important;
+    }
+    .nav-collapse.collapse.in {
+        display: block !important;
+    }
+    .nav-header .collapse, .navbar-toggle {
+        display:block !important;
+    }
+    .navbar-header {
+        float:none;
+    }
+}
+.pagination {  
+   display: flex !important;
+ 
+}
 
 @media only screen and (max-width:650px) {
 	.footer-center{
@@ -1328,4 +1351,5 @@ table + div[ng-include] { padding: 0 5px; }
 	 position: fixed;	
   }
 }
+
  /* end media query  */

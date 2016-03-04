@@ -65,7 +65,13 @@ myApp.controller('loginController', ['$scope', 'Login', '$location', '$rootScope
 	
 	
 	//$scope.login = {"email":"mail2asik@gmail.com", "password": "mypassword"};
-	
+	if (window.matchMedia("(min-width: 400px)").matches) {
+		var element = angular.element('#main');
+        
+		
+	} else {
+		//$scope.poster = 'big.png';
+	}
 	$scope.doLogin = function() {
 		
 		if ($scope.loginForm.$valid) {
@@ -80,7 +86,8 @@ myApp.controller('loginController', ['$scope', 'Login', '$location', '$rootScope
 				   console.log( $scope.data.services[0]);
 				   
 					$rootScope.serviceID=$rootScope.userInfo.services[0].serviceID;	    
-					console.log("$rootScope.userInfo.services[0].serviceId--------"+$rootScope.userInfo.services[0].serviceId);
+					  $rootScope.userName=$rootScope.userInfo.realname;
+					console.log("$rootScope.userName--------"+$rootScope.userName);
 					$rootScope.token=$rootScope.userInfo.token;	
 					
 					$http.defaults.headers.common['token'] =$rootScope.userInfo.token;	
@@ -119,9 +126,10 @@ myApp.controller('signupController', ['$scope', 'userServices', '$location', fun
 	}
 }]);
 
-myApp.controller('ServiceCtrl', ['$scope', '$location', '$rootScope', function($scope, $location, $rootScope) {	
+myApp.controller('ServiceCtrl', ['$scope','$http', '$location', '$rootScope', function($scope,$http, $location, $rootScope) {	
 	 $scope.selectService = function(service) {
 	 $rootScope.selectedService = service;	
+	 $http.defaults.headers.common['serviceID'] =$rootScope.selectedService.serviceId;
 	 $location.path("/dashboard");
 };
 }]);
