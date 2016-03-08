@@ -22,6 +22,7 @@ var myApp = angular.module('myApp', [
 
 myApp.constant('APP_BASE_URL',"http://api.tangerine.io/inboundhtml/");
 myApp.constant('API_BASE_URL',"http://localhost:8080/mywebs/");
+//myApp.constant('API_BASE_URL',"http://profx.com:8080/tomcat_manager/");
 myApp.constant('INTERVAL',5000);
 myApp.constant('DEFAULT_LANG','ja');
 myApp.constant('DEFAULT_LAT','35.6833');
@@ -64,9 +65,11 @@ myApp.config(function($urlRouterProvider, $httpProvider,$breadcrumbProvider, $lo
    //$httpProvider.defaults.headers["Access-Control-Request-Headers"] = "X-Requested-With, accept, content-type";
  // delete $httpProvider.defaults.headers.common['X-Requested-With'];
   if(!window.sessionStorage["userInfo"]){
-	$urlRouterProvider.otherwise("/login");  
+	  console.log(" config-------login---------");	
+	   $urlRouterProvider.otherwise("/login1");  
   }else{
-	$urlRouterProvider.otherwise("/dashboard");  
+	   console.log(" config-------dashboard---------");
+	//$urlRouterProvider.otherwise("/dashboard");  
   }
     
 });
@@ -76,15 +79,15 @@ myApp.config(function($urlRouterProvider, $httpProvider,$breadcrumbProvider, $lo
 //Run phase
 myApp.run(function($rootScope, $state,$http) {
 	$rootScope.$state = $state; //Get state info in view
-		console.log("run condition");	
+		console.log("run condition----------------");	
 	if(window.sessionStorage["userInfo"]){
 	   console.log("if condition");
 	   $rootScope.userInfo = JSON.parse(window.sessionStorage["userInfo"]);	
 	   $rootScope.selectedService =  $rootScope.userInfo.services[0];	   
 	   $rootScope.serviceID=$rootScope.userInfo.services[0].serviceId;
-	    $rootScope.userName=$rootScope.userInfo.realname;
+	   $rootScope.userName=$rootScope.userInfo.realname;
 	     console.log(" =$rootScope.userInfo.service "+$rootScope.userInfo.services[0].serviceId);
-	   $rootScope.token=$rootScope.userInfo.token;	   	 
+	  // $rootScope.token=$rootScope.userInfo.token;	   	 
 	   $http.defaults.headers.common['token'] =$rootScope.userInfo.token;	
 	   $http.defaults.headers.common['serviceID'] =$rootScope.userInfo.services[0].serviceId;
 	   $http.defaults.headers.common['userId'] =$rootScope.userInfo.userId;		
@@ -97,12 +100,14 @@ myApp.run(function($rootScope, $state,$http) {
 	$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
 		 
 		if(toState && toState.data && toState.data.auth && !window.sessionStorage["userInfo"]){
+			console.log("run condition-----login-----------");
 			event.preventDefault();
-			window.location.href = "#login";
+			//window.location.href = "#login";
 		}		
 		
 		if(!toState && !toState.data && !toState.data.auth && window.sessionStorage["userInfo"]){
 			event.preventDefault();
+			console.log("run condition-----dashboard-----------");
 			window.location.href = "#dashboard";
 		}
 	});

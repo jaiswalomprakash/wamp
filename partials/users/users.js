@@ -126,12 +126,14 @@ myApp.controller('signupController', ['$scope', 'userServices', '$location', fun
 	}
 }]);
 
-myApp.controller('ServiceCtrl', ['$scope','$http', '$location', '$rootScope', function($scope,$http, $location, $rootScope) {	
-	 $scope.selectService = function(service) {
+myApp.controller('HeaderServiceCtrl', ['$scope','$http', '$location', '$rootScope', function($scope,$http, $location, $rootScope) {	
+	 $scope.selectNewService = function(service) {
 	 $rootScope.selectedService = service;	
 	 $http.defaults.headers.common['serviceID'] =$rootScope.selectedService.serviceId;
+	 console.log("--------------------");
 	 $location.path("/dashboard");
 };
+
 }]);
 
 myApp.controller('logoutController', ['$scope', '$location', '$rootScope', function($scope, $location, $rootScope) {

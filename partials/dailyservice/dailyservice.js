@@ -44,21 +44,24 @@ myApp.controller('GetDailyServiceController', ['$scope', 'GetDailyService', 'dat
 				if (!result.error) {
   				  //$location.path("/dashboard");
 				//  $location.path("/addDailyservice");
-				for(var i = 0; i < result.dailyServices.length; i++){
-					console.log("type----"+result.dailyServices[i].type);
-					if(result.dailyServices[i].type=="1")	{
-					totalCollection += result.dailyServices[i].price
-					}else if(result.dailyServices[i].type=="2"){
-						totalExpenses += result.dailyServices[i].price
+				if(angular.isObject(result.dailyServices)){
+					for(var i = 0; i < result.dailyServices.length; i++){
+						console.log("type----"+result.dailyServices[i].type);
+						if(result.dailyServices[i].type=="1")	{
+						totalCollection += result.dailyServices[i].price
+						}else if(result.dailyServices[i].type=="2"){
+							totalExpenses += result.dailyServices[i].price
+						}
+						
 					}
 					
+					dataTable.render($scope, '', "customerstList", result.dailyServices);
+				}
+					$scope.totalCollection =	totalCollection;
+					$scope.totalExpenses =	totalExpenses;
+					$scope.total =	totalCollection-totalExpenses;
 				}
 				
-				$scope.totalCollection =	totalCollection;
-				$scope.totalExpenses =	totalExpenses;
-				$scope.total =	totalCollection-totalExpenses;
-				  dataTable.render($scope, '', "customerstList", result.dailyServices);
-				}
 			}, function(errorResult) {
 				// do something on error	
 				//$scope.login = {"email":"Email", "password": "Password"};				

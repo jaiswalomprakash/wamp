@@ -12,11 +12,12 @@
 		
 				
 				<p>Please provide your details</p>
-				<span class="validation-invalid" ng-show="error" ng-cloak> {{error}}</span>	
+
+				<p class="validation-invalid-error" ng-show="error" ng-cloak> {{error}}</p>	
 	
 				<div class="input-group input-group-lg">				  
 				<span class="input-group-addon clearfix" id="sizing-addon1" ><span class="glyphicon glyphicon-user"></span></span>				  
-				  <input type="text" name="email" class="form-control" placeholder="Email/Mobile" aria-describedby="sizing-addon1" ng-model="login.email" 	validator="required" required-error-message="Email is required" email-error-message="Invalid email address" valid-method="watch">
+				  <input type="text" name="email" class="form-control" placeholder="Email/Mobile" aria-describedby="sizing-addon1" ng-model="login.email" 	validator="required" required-error-message="Email/Mobile is required" email-error-message="Invalid email address" valid-method="watch">
 				</div>
 				<br>
 				<div class="input-group input-group-lg">
