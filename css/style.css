@@ -1285,7 +1285,14 @@ color: #333;
 
 
 
-
+ .validation-invalid-error {	
+	 color: red;
+}
+.validation-invalid {	
+	bottom: -30px;
+    color: red;
+    position: absolute;
+}
 
 
 /*------------------------------------------------------------------
@@ -1299,11 +1306,6 @@ color: #333;
 	
 }
 
-.validation-invalid {	
-	bottom: -30px;
-    color: red;
-    position: absolute;
-}
 
 table + div[ng-include] { padding: 0 5px; }
 
@@ -1327,13 +1329,8 @@ table + div[ng-include] { padding: 0 5px; }
     .navbar-header {
         float:none;
     }
-}
-.pagination {  
-   display: flex !important;
- 
-}
-
-@media only screen and (max-width:650px) {
+	
+	
 	.footer-center{
 		text-align:center !important;
 	}
@@ -1345,11 +1342,21 @@ table + div[ng-include] { padding: 0 5px; }
 	margin-top:10em !important;
 	
   }
-  
+ 
   .navbar-fixed-top {
 	/* position: static; */
 	 position: fixed;	
   }
+  
+
+}
+.pagination {  
+   display: flex !important;
+ 
+}
+
+@media only screen and (max-width:650px) {
+	
 }
 
  /* end media query  */
