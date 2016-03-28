@@ -20,7 +20,7 @@ var myApp = angular.module('myApp', [
 ]);
 
 
-myApp.constant('APP_BASE_URL',"http://api.tangerine.io/inboundhtml/");
+//myApp.constant('APP_BASE_URL',"http://api.tangerine.io/inboundhtml/");
 myApp.constant('API_BASE_URL',"http://localhost:8080/mywebs/");
 //myApp.constant('API_BASE_URL',"http://profx.com:8080/tomcat_manager/");
 myApp.constant('INTERVAL',5000);
@@ -66,7 +66,7 @@ myApp.config(function($urlRouterProvider, $httpProvider,$breadcrumbProvider, $lo
  // delete $httpProvider.defaults.headers.common['X-Requested-With'];
   if(!window.sessionStorage["userInfo"]){
 	  console.log(" config-------login---------");	
-	   $urlRouterProvider.otherwise("/login1");  
+	   $urlRouterProvider.otherwise("/login");  
   }else{
 	   console.log(" config-------dashboard---------");
 	//$urlRouterProvider.otherwise("/dashboard");  

@@ -7,7 +7,7 @@
 	<!-- /widget-header -->
 	<div class="widget-content">
 	  <div class="widget big-stats-container">
-		<div class="widget-content" style="padding:10px;" ng-controller="addDailyserviceController">
+		<div class="widget-content" style="padding:10px;" >
 		
 		 <form id="edit-profile" novalidate name="addDailyserviceForm" autocomplete="off" class="form-horizontal">
 			<div class="form-group has-success">
@@ -38,53 +38,12 @@
 				</div>
 			</div>
 			
-		<!--	<div class="form-group has-success">
-				<label class="col-lg-2 col-sm-12 col-xs-12 control-label" for="inputSuccess">Flat No.</label>
-				<div class="col-lg-2 col-sm-12 col-xs-8">					
-					<select name="active" ng-model="dailyservice.active" 
-			  validator="required" required-error-message="Flat No. is required" valid-method="watch" class="form-control"  title="Choose 2-4 colors">
-						
-						
-						<option value="">Select Flat No.</option>
-						
-						<option value="G1">G1</option>
-						<option value="G2">G2</option>	
-						<option value="G3">G3</option>
-						<option value="G4">G4</option>
-						
-						
-						
-						<option value="F1">F1</option>
-						<option value="F2">F2</option>	
-						<option value="F3">F3</option>
-						<option value="F4">F4</option>
-						
-					
-						
-						<option value="S1">S1</option>
-						<option value="S2">S2</option>	
-						<option value="S3">S3</option>
-						<option value="S4">S4</option>
-						
-						
-						
-						<option value="T1">T1</option>
-						<option value="T2">T2</option>	
-						<option value="T3">T3</option>
-						<option value="T4">T4</option>
-						
-						<option value="PH">PH</option>
-					
-						
-					</select>
-					
-				</div>
-			</div> -->
+		
 			
 			<div class="form-group has-success">
 				<label class="col-lg-2 col-sm-12 col-xs-12 control-label" for="inputWarning">Amount</label>
 				<div class="col-lg-5 col-sm-12 col-xs-10">
-					<input type="number" class="form-control" max="5000" step="100" ng-init="dailyservice.price=1500" name="price" placeholder="Amount" ng-model="dailyservice.price" 
+					<input type="number" class="form-control" max="15000" step="100" ng-init="dailyservice.price=1500" name="price" placeholder="Amount" ng-model="dailyservice.price" 
 			  validator="required" required-error-message="Amount is required"  />
 				</div>
 			</div>

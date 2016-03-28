@@ -17,14 +17,14 @@
 	<!-- /widget-header -->
 	<div class="widget-content">
 				<div>
-				<table wt-responsive-table ng-table="customerstList" show-filter="true" class="table table-striped table-bordered">
+				<table wt-responsive-table ng-table="dailyserviceList" show-filter="true" class="table table-striped table-bordered">
 					<tr class="{{customer.type == 1 ? 'odd' : 'even'}} " ng-repeat="customer in $data">
 						
 						<td data-title="'Description'" sortable="'itemDesc'" filter="{ 'itemDesc': 'text' }">
 							{{customer.itemDesc}}
 						</td>
-						<td data-title="'createDate'" sortable="'createDate'" filter="{ 'createDate': 'text' }">
-							{{customer.createDate}}
+						<td data-title="'createDate'" sortable="'dateCreated'" filter="{ 'dateCreated': 'text' }">
+							{{customer.dateCreated}}
 						</td>
 						<td data-title="'price'" sortable="'price'" filter="{ 'price': 'text' }">
 							{{customer.price}} Rs.
@@ -36,7 +36,10 @@
 						
 						
 						<td data-title="'Action'" >
-							<a ui-sref="customer.edit({id: customer.id})"><!--<button class="btn  btn-success">View</button>--> <i class="glyphicon glyphicon-film"></i></a></a>
+						 <a class="btn btn-primary" ui-sref="editDailyservice({id:customer.id})">View</a>
+      <a class="btn btn-danger"  ng-click="deleteMovie(movie)">Delete</a>
+						<a href="#/editDailyservice/{{dailyservice.id}}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></button>
+							<!--<a ng-click="viewDailyService(1)"><button class="btn  btn-success">View</button> <i class="glyphicon glyphicon-film"></i></a></a> -->
 						</td>
 					</tr>
 				</table> 

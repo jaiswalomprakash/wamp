@@ -12,6 +12,30 @@ angular.module('myApp.services').factory('Login', function($resource,API_BASE_UR
  
 });
 
+angular.module('myApp.services').factory('DailyServiceById', function($resource,API_BASE_URL) {	
+	 //return $resource(API_BASE_URL+'Console/Login', 
+	 return $resource(API_BASE_URL+'dailyService/getDailyServiceById', 
+	            {service_id:'@id'}, {});
+ // return $resource('partials/users/mock/login.json'); // Note the full endpoint address
+
+ 
+})
+
+
+// comman method to daily service 
+
+angular.module('myApp.services').factory("DailyService", function($resource,API_BASE_URL) {
+          return $resource(API_BASE_URL+"dailyService/getDailyRecords", {}, {
+            query: { method: "GET"},
+            create: { method: "POST" },
+            get: { method: "GET", url: API_BASE_URL+"dailyService/getDailyServiceById?service_id=:id" },
+            remove: { method: "DELETE", url: "/api/StudentsApi?id=:id" },
+            update: { method: "PUT", url: "/api/StudentsApi?id=:id" }
+       });
+    }
+);
+
+
 angular.module('myApp.services').factory('StoreDailyService', function($resource,API_BASE_URL) {	
      
 	 return $resource(API_BASE_URL+'dailyService/storeDailyRecords', 
