@@ -1293,7 +1293,17 @@ color: #333;
     color: red;
     position: absolute;
 }
+.btn-default {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: #333;
+	padding: 0 10px;
+	
+}
 
+.btn-default .glyphicon-pencil {
+	font-size : 12px !important;
+}
 
 /*------------------------------------------------------------------
 [2. Max Width: 1200px]
@@ -1317,7 +1327,7 @@ table + div[ng-include] { padding: 0 5px; }
     margin-top: 5px;
 }
 @media only screen and (max-width:650px) {
-    .nav-collapse.collapse {
+/*     .nav-collapse.collapse {
         display: none !important;
     }
     .nav-collapse.collapse.in {
@@ -1328,7 +1338,7 @@ table + div[ng-include] { padding: 0 5px; }
     }
     .navbar-header {
         float:none;
-    }
+    } */
 	
 	
 	.footer-center{

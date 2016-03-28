@@ -29,13 +29,15 @@
 				<label class="col-lg-2 col-sm-12 col-xs-12 control-label" for="inputSuccess">Collection Type</label>
 				<div class="col-lg-5 col-sm-12 col-xs-10">					
 					<select name="type" ng-model="dailyservice.type" 
-			  validator="required"  required-error-message="Collection Type is required" valid-method="watch" class="form-control"  title="Choose 2-4 colors">
+			  validator="required"  required-error-message="Collection Type is required"  valid-method="watch" class="form-control"  title="Choose 2-4 colors" convert-to-number>
 						<option value="">Select Collection Type</option>
 						<option value="1"  >Daily Collection</option>
 						<option value="2" >Daily Expenses</option>		
 					</select>
 					
 				</div>
+				
+			
 			</div>
 			
 		

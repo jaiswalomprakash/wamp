@@ -119,8 +119,10 @@ myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$locat
 			console.log("token----------$rootScope.userInfo.userName------- ="+$rootScope.userName);
 			console.log("serviceID ="+$rootScope.serviceID);
 			console.log("itemDesc ="+$scope.dailyservice.itemDesc);
-			var dailyservice ={"active":1,"itemDesc":$scope.dailyservice.itemDesc,"itemDesc":$scope.dailyservice.itemDesc,"price":$scope.dailyservice.price,"type":$scope.dailyservice.type,"userName":$rootScope.userName};			
-		userServices.save(dailyservice,function(result) {	
+			var dailyservice ={"active":1,"itemDesc":$scope.dailyservice.itemDesc,"itemDesc":$scope.dailyservice.itemDesc,"price":$scope.dailyservice.price,"type":$scope.dailyservice.type,"userName":$rootScope.userName};	
+	//	$scope.dailyservice["active"]=1;
+	//	$scope.dailyservice["userName"]=$rootScope.userName};		
+		userServices.save($scope.dailyservice,function(result) {	
 				$scope.data = result;
 				if (!result.error) {
   				  //$location.path("/dashboard");
@@ -178,12 +180,10 @@ myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$locat
 
 
 myApp.controller('editDailyserviceController', ['$scope', 'DailyService','$filter', '$location','$rootScope','$routeParams','$stateParams', function($scope, dailyService,$filter, $location,$rootScope,$routeParams,$stateParams ) {	
-console.log("1 id "+$scope.id);
-console.log("2 id "+$routeParams.id);
-
 
 	dailyService.get({id:$stateParams.id},function(result) {	
-				$scope.dailyservice =result;	
+			   	$scope.dailyservice =result;	
+		
 				$scope.test= $scope.dailyservice.id;
 				 $scope.result1 = $filter('date')($scope.dailyservice.dateCreated, 'shortDate');	
 
@@ -204,7 +204,7 @@ console.log("2 id "+$routeParams.id);
 						var date3 = date2[0].split('-');
 						var the_date = new Date(parseInt(date3[0]),parseInt(date3[1])-1,parseInt(date3[2]),parseInt(date2[1]),parseInt(date1[1]),parseInt(date1[2]));
 						$scope.dailyservice["dateCreated"]= $filter('date')(new Date(the_date), 'MMMM d, y hh:mm:ss');
-						console.log("---hhmmsstt----"+$scope.dailyservice.dateCreated)
+						$scope.dailyservice["type"] =$scope.dailyservice.type.toString()
 						
 					}
 				}, function(errorResult) {
@@ -216,14 +216,24 @@ console.log("2 id "+$routeParams.id);
 					}
 					
 				});
-				$scope.cancel = function() {
-				$location.path("/dailyservice");
-	}
+				$scope.addDailyservice = function() {
+					addnewDailyServcie();
+				
+				}
+				$scope.cancel = function($scope) {
+				$location.path("/dailyservice");				
+				}
 }]);
 
 myApp.controller('newDailyserviceController', ['$scope', '$filter', '$location','$rootScope','$routeParams', function($scope,  $filter, $location,$rootScope,$routeParams ) {
 	console.log("---test33----"+$filter("currentdate")())	;			
-	$scope.dailyservice = {"dateCreated":$filter("currentdate")(),"price":1500};
+	$scope.dailyservice = {"dateCreated":$filter("currentdate")(),"price":1500,"type":""};
 	
 	
 }]);
+
+function addnewDailyServcie($scope){
+					addnewDailyServcie($scope.dailyservice);
+					console.log($scope.dailyservice)
+				
+}

@@ -13,7 +13,16 @@
 		</div> -->
 	</div>
 	
-	
+	<div class="col-lg-4 col-sm-4">
+			<span class="label label-success">Total Collection  {{ totalCollection }} Rs</span>
+			
+			</div>
+			<div class="col-lg-4 col-sm-4">
+			<span class="label label-info">Total Expenses {{ totalExpenses }} Rs </span>
+			</div>
+			<div class="col-lg-4 col-sm-4">
+			<span class="label label-danger">Total <b>{{ total }} </b>Rs</span>
+			</div>
 	<!-- /widget-header -->
 	<div class="widget-content">
 				<div>
@@ -36,9 +45,8 @@
 						
 						
 						<td data-title="'Action'" >
-						 <a class="btn btn-primary" ui-sref="editDailyservice({id:customer.id})">View</a>
-      <a class="btn btn-danger"  ng-click="deleteMovie(movie)">Delete</a>
-						<a href="#/editDailyservice/{{dailyservice.id}}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></button>
+						
+						<a  ui-sref="editDailyservice({id:customer.id})" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></button>
 							<!--<a ng-click="viewDailyService(1)"><button class="btn  btn-success">View</button> <i class="glyphicon glyphicon-film"></i></a></a> -->
 						</td>
 					</tr>
@@ -49,16 +57,7 @@
 			
 	</div>
 	
-	<div class="col-lg-4">
-			<span class="label label-success">Total Collection  {{ totalCollection }} Rs</span>
 			
-			</div>
-			<div class="col-lg-4 ">
-			<span class="label label-info">Total Expenses {{ totalExpenses }} Rs </span>
-			</div>
-			<div class="col-lg-4">
-			<span class="label label-danger">Total <b>{{ total }} </b>Rs</span>
-			</div>
 	
 	<!-- /widget-content --> 
   </div>
