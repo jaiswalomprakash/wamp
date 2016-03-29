@@ -13,10 +13,10 @@
 			<div class="form-group has-success">
 				<label class="col-lg-2 col-sm-12 col-xs-12 control-label" >Date</label>
 				<div class="col-lg-3 col-sm-12 col-xs-10">					
-					<div class="datepicker" date-set-hidden="true" datepicker-append-to="body"
-				 date-format="dd-MM-yyyy"
+				<div class="datepicker" date-set-hidden="true" datepicker-append-to="body"
+				  date-format="dd, MMMM yyyy"
 				  date-typer="true"   
-				  date-set="{{currentdate | currentdate:'dd-MM-yyyy'}}"  
+				  date-set="{{dailyservice.dateCreated}}"  
 				  button-prev='<i class="glyphicon glyphicon-chevron-left"></i>'
 				  button-next='<i class="glyphicon glyphicon-chevron-right"></i>'>
 				  <input ng-model="c" ng-readonly="true" type="text" class="form-control"/>				  

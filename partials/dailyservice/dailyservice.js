@@ -113,64 +113,69 @@ myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$locat
 }]);
 
  myApp.controller('addDailyserviceController', ['$scope', 'StoreDailyService', '$location','$rootScope','$routeParams', function($scope, userServices, $location,$rootScope,$routeParams ) {
-	
 	$scope.addDailyservice = function() {
-		if ($scope.addDailyserviceForm.$valid) {			
-			console.log("token----------$rootScope.userInfo.userName------- ="+$rootScope.userName);
-			console.log("serviceID ="+$rootScope.serviceID);
-			console.log("itemDesc ="+$scope.dailyservice.itemDesc);
-			var dailyservice ={"active":1,"itemDesc":$scope.dailyservice.itemDesc,"itemDesc":$scope.dailyservice.itemDesc,"price":$scope.dailyservice.price,"type":$scope.dailyservice.type,"userName":$rootScope.userName};	
-	//	$scope.dailyservice["active"]=1;
-	//	$scope.dailyservice["userName"]=$rootScope.userName};		
-		userServices.save($scope.dailyservice,function(result) {	
-				$scope.data = result;
-				if (!result.error) {
-  				  //$location.path("/dashboard");
-				  $location.path("/dailyservice");
-				  
-				}
-			}, function(errorResult) {
-				// do something on error	
-				//$scope.login = {"email":"Email", "password": "Password"};				
-				console.log("error op "+errorResult.status);
-				if(errorResult.status === 500) {  
-					$scope.error = errorResult.data.statusMessage;				
-				}
+					addnewDailyServcie($scope,$rootScope,$location,$filter,dailyService);
 				
-			});	
-		}
-	}
+				}
+	// $scope.addDailyservice = function() {
+		// if ($scope.addDailyserviceForm.$valid) {			
+			// console.log("token----------$rootScope.userInfo.userName------- ="+$rootScope.userName);
+			// console.log("serviceID ="+$rootScope.serviceID);
+			// console.log("itemDesc ="+$scope.dailyservice.itemDesc);
+			// var dailyservice ={"active":1,"itemDesc":$scope.dailyservice.itemDesc,"itemDesc":$scope.dailyservice.itemDesc,"price":$scope.dailyservice.price,"type":$scope.dailyservice.type,"userName":$rootScope.userName};	
+	// //	$scope.dailyservice["active"]=1;
+	// //	$scope.dailyservice["userName"]=$rootScope.userName};		
+		// userServices.save($scope.dailyservice,function(result) {	
+				// $scope.data = result;
+				// if (!result.error) {
+  				  // //$location.path("/dashboard");
+				  // $location.path("/dailyservice");
+				  
+				// }
+			// }, function(errorResult) {
+				// // do something on error	
+				// //$scope.login = {"email":"Email", "password": "Password"};				
+				// console.log("error op "+errorResult.status);
+				// if(errorResult.status === 500) {  
+					// $scope.error = errorResult.data.statusMessage;				
+				// }
+				
+			// });	
+		// }
+	// }
+	
 	
 	$scope.cancel = function() {
 		$location.path("/dailyservice");
 	}
 }]);
 
-  myApp.controller('editDailyserviceController1', ['$scope', 'StoreDailyService', '$location','$rootScope','$routeParams', function($scope, userServices, $location,$rootScope,$routeParams ) {
+  myApp.controller('editDailyserviceController1', ['$scope', 'DailyService', '$location','$filter','$rootScope','$routeParams', function($scope, dailyService, $location,$filter,$rootScope,$routeParams ) {
 	
 	$scope.addDailyservice = function() {
-		if ($scope.addDailyserviceForm.$valid) {			
-			console.log("token----------$rootScope.userInfo.userName------- ="+$rootScope.userName);
-			console.log("serviceID ="+$rootScope.serviceID);
-			console.log("itemDesc ="+$scope.dailyservice.itemDesc);
-			var dailyservice ={"active":1,"itemDesc":$scope.dailyservice.itemDesc,"itemDesc":$scope.dailyservice.itemDesc,"price":$scope.dailyservice.price,"type":$scope.dailyservice.type,"userName":$rootScope.userName};			
-		userServices.save(dailyservice,function(result) {	
-				$scope.data = result;
-				if (!result.error) {
-  				  //$location.path("/dashboard");
-				  $location.path("/dailyservice");
+		addnewDailyServcie($scope,$rootScope,$location,$filter,dailyService);
+		// if ($scope.addDailyserviceForm.$valid) {			
+			// console.log("token----------$rootScope.userInfo.userName------- ="+$rootScope.userName);
+			// console.log("serviceID ="+$rootScope.serviceID);
+			// console.log("itemDesc ="+$scope.dailyservice.itemDesc);
+			// var dailyservice ={"active":1,"itemDesc":$scope.dailyservice.itemDesc,"itemDesc":$scope.dailyservice.itemDesc,"price":$scope.dailyservice.price,"type":$scope.dailyservice.type,"userName":$rootScope.userName};			
+		// userServices.save(dailyservice,function(result) {	
+				// $scope.data = result;
+				// if (!result.error) {
+  				  // //$location.path("/dashboard");
+				  // $location.path("/dailyservice");
 				  
-				}
-			}, function(errorResult) {
-				// do something on error	
-				//$scope.login = {"email":"Email", "password": "Password"};				
-				console.log("error op "+errorResult.status);
-				if(errorResult.status === 500) {  
-					$scope.error = errorResult.data.statusMessage;				
-				}
+				// }
+			// }, function(errorResult) {
+				// // do something on error	
+				// //$scope.login = {"email":"Email", "password": "Password"};				
+				// console.log("error op "+errorResult.status);
+				// if(errorResult.status === 500) {  
+					// $scope.error = errorResult.data.statusMessage;				
+				// }
 				
-			});	
-		}
+			// });	
+		// }
 	}
 	
 	$scope.cancel = function() {
@@ -217,23 +222,57 @@ myApp.controller('editDailyserviceController', ['$scope', 'DailyService','$filte
 					
 				});
 				$scope.addDailyservice = function() {
-					addnewDailyServcie();
+					addnewDailyServcie($scope,$rootScope,$location,$filter,dailyService);
 				
 				}
-				$scope.cancel = function($scope) {
+				$scope.cancel = function() {
 				$location.path("/dailyservice");				
 				}
 }]);
 
-myApp.controller('newDailyserviceController', ['$scope', '$filter', '$location','$rootScope','$routeParams', function($scope,  $filter, $location,$rootScope,$routeParams ) {
+myApp.controller('newDailyserviceController', ['$scope', 'DailyService', '$filter', '$location','$rootScope','$routeParams', function($scope,dailyService, $filter, $location,$rootScope,$routeParams ) {
 	console.log("---test33----"+$filter("currentdate")())	;			
 	$scope.dailyservice = {"dateCreated":$filter("currentdate")(),"price":1500,"type":""};
+//	addnewDailyServcie($scope,$rootScope,$location,$filter,dailyService);
+$scope.addDailyservice = function() {
+					addnewDailyServcie($scope,$rootScope,$location,$filter,dailyService);
+				
+				}
+				$scope.cancel = function() {
+				$location.path("/dailyservice");				
+				}
 	
 	
 }]);
 
-function addnewDailyServcie($scope){
-					addnewDailyServcie($scope.dailyservice);
-					console.log($scope.dailyservice)
+function addnewDailyServcie($scope,$rootScope,$location,$filter,userServices){					
+					console.log($scope.dailyservice);
+	//	if ($scope.addDailyserviceForm.$valid) {			
+			
+			console.log("serviceID ="+$rootScope.serviceID);
+			console.log("itemDesc ="+$scope.dailyservice.itemDesc);
+		//	var dailyservice ={"active":1,"itemDesc":$scope.dailyservice.itemDesc,"itemDesc":$scope.dailyservice.itemDesc,"price":$scope.dailyservice.price,"type":$scope.dailyservice.type,"userName":$rootScope.userName};	
+		$scope.dailyservice["active"]=1;
+		$scope.dailyservice["userName"]=$rootScope.userName;	
+		console.log("token------before----dateCreated------ ="+$scope.dailyservice.dateCreated);	
+		$scope.dailyservice["dateCreated"]=$filter('date')(new Date($scope.dailyservice.dateCreated), 'yyyy-MM-dd HH:mm:ss');	
+console.log("token------after----dateCreated------ ="+$filter('date')(new Date($scope.dailyservice.dateCreated), 'yyyy-MM-dd HH:mm:ss'));		
+		userServices.create($scope.dailyservice,function(result) {	
+				$scope.data = result;
+				if (!result.error) {
+  				  //$location.path("/dashboard");
+				  $location.path("/dailyservice");
+				  
+				}
+			}, function(errorResult) {
+				// do something on error	
+				//$scope.login = {"email":"Email", "password": "Password"};				
+				console.log("error op "+errorResult.status);
+				if(errorResult.status === 500) {  
+					$scope.error = errorResult.data.statusMessage;				
+				}
+				
+			});	
+		//}
 				
 }

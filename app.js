@@ -220,7 +220,7 @@ myApp.directive('valid-number', function () {
 });
 myApp.filter('currentdate',['$filter',  function($filter) {
     return function() {
-        return $filter('date')(new Date(), 'yyyy-MM-dd');
+        return $filter('date')(new Date(), 'dd, MMMM yyyy');
     };
 }])
 

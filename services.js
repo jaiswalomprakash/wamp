@@ -27,7 +27,7 @@ angular.module('myApp.services').factory('DailyServiceById', function($resource,
 angular.module('myApp.services').factory("DailyService", function($resource,API_BASE_URL) {
           return $resource(API_BASE_URL+"dailyService/getDailyRecords", {}, {
             query: { method: "GET"},
-            create: { method: "POST" },
+            create: { method: "POST",url: API_BASE_URL+"dailyService/storeDailyRecords" },
             get: { method: "GET", url: API_BASE_URL+"dailyService/getDailyServiceById?service_id=:id" },
             remove: { method: "DELETE", url: "/api/StudentsApi?id=:id" },
             update: { method: "PUT", url: "/api/StudentsApi?id=:id" }
