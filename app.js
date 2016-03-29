@@ -218,9 +218,20 @@ myApp.directive('valid-number', function () {
         }
     };
 });
+
+myApp.directive('setHeight', function($window){
+  return{
+    link: function(scope, element, attrs){
+		console.log("inner height "+$window.innerHeight);
+        element.css('min-height', ($window.innerHeight-206)+ 'px');
+        //element.height($window.innerHeight/3);
+    }
+  }
+})
+
 myApp.filter('currentdate',['$filter',  function($filter) {
     return function() {
-        return $filter('date')(new Date(), 'dd, MMMM yyyy');
+        return $filter('date')(new Date(), 'dd, MMMM yyyy hh:mm:ss');
     };
 }])
 

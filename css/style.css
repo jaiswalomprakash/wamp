@@ -264,6 +264,7 @@ textarea {
 	padding-bottom: 2em;
 	margin-top:8em;
 	border-bottom: 1px solid #000;
+	/* min-height: 430px; */
 }
 
 
@@ -1257,10 +1258,18 @@ color: #333;
 
 
 .odd {
-      background-color: #ccc !important;
+      background-color: #485461 !important;
+	  color: #fff;
   }
            
+  .blue  {
+  color: #B86F09 !important;
+}
 
+  .orange  {
+  color: #CC9318 !important;
+}
+     
 
 
 /*------------------------------------------------------------------

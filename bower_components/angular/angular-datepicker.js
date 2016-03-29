@@ -311,7 +311,7 @@
           if ($scope.isSelectableMinDate($scope.year + '/' + $scope.monthNumber + '/' + $scope.day)
               && $scope.isSelectableMaxDate($scope.year + '/' + $scope.monthNumber + '/' + $scope.day)) {
 
-            var modelDate = new Date($scope.year + '/' + $scope.monthNumber + '/' + $scope.day);
+            var modelDate = new Date($scope.year + '/' + $scope.monthNumber + '/' + $scope.day +' '+$filter('date')(new Date(), 'hh:mm:ss'));
 
             if (attr.dateFormat) {
 

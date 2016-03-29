@@ -43,11 +43,13 @@ myApp.config(function($stateProvider,$urlRouterProvider) {
   }
   });
   
+   
+  
  
   
 });
 
-myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$location', 'dataTable', 'API_BASE_URL', function($scope, myDailyService, $location, dataTable, API_BASE_URL) {
+myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$location', 'dataTable', '$stateParams', function($scope, myDailyService, $location, dataTable, $stateParams) {
     var totalCollection=0;
 	var totalExpenses=0;
 	var total=0;
@@ -107,7 +109,32 @@ myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$locat
 				
 			});	
 		
-
+			$scope.deleteDailyservice = function(id) {
+				
+				console.log("--------"+$scope.dailyserviceList);
+				  var deleteCustomer = confirm('Are you absolutely sure you want to delete?');
+				  if (deleteCustomer) {
+					  myDailyService.remove({id:id},function(result) {	
+					if (!result.error) {					
+						$location.path("/dailyservice");						
+						$location.replace();
+						
+					}
+					}, function(errorResult) {
+						// do something on error	
+						//$scope.login = {"email":"Email", "password": "Password"};				
+						console.log("error op "+errorResult.status);
+						if(errorResult.status === 500) {  
+							$location.path("/dailyservice");
+							$scope.error = errorResult.data.statusMessage;				
+						}
+						
+					});
+					  
+				  }
+				
+				
+			}
 
 	
 }]);
@@ -208,7 +235,7 @@ myApp.controller('editDailyserviceController', ['$scope', 'DailyService','$filte
 						var date2 = date1[0].split(' ');
 						var date3 = date2[0].split('-');
 						var the_date = new Date(parseInt(date3[0]),parseInt(date3[1])-1,parseInt(date3[2]),parseInt(date2[1]),parseInt(date1[1]),parseInt(date1[2]));
-						$scope.dailyservice["dateCreated"]= $filter('date')(new Date(the_date), 'MMMM d, y hh:mm:ss');
+						$scope.dailyservice["dateCreated"]= $filter('date')(new Date(the_date), 'dd, MMMM yyyy hh:mm:ss');
 						$scope.dailyservice["type"] =$scope.dailyservice.type.toString()
 						
 					}
@@ -228,6 +255,32 @@ myApp.controller('editDailyserviceController', ['$scope', 'DailyService','$filte
 				$scope.cancel = function() {
 				$location.path("/dailyservice");				
 				}
+}]);
+
+
+
+myApp.controller('deleteDailyserviceController', ['$scope', 'DailyService', '$filter', '$location','$rootScope','$routeParams','$stateParams', function($scope,dailyService, $filter, $location,$rootScope,$routeParams,$stateParams ) {
+	
+	dailyService.remove({id:$stateParams.id},function(result) {	
+			   	
+		
+					
+					if (!result.error) {						
+						$location.path("/dailyservice");
+						
+					}
+				}, function(errorResult) {
+					// do something on error	
+					//$scope.login = {"email":"Email", "password": "Password"};				
+					console.log("error op "+errorResult.status);
+					if(errorResult.status === 500) {  
+					    $location.path("/dailyservice");
+						$scope.error = errorResult.data.statusMessage;				
+					}
+					
+				});
+
+	
 }]);
 
 myApp.controller('newDailyserviceController', ['$scope', 'DailyService', '$filter', '$location','$rootScope','$routeParams', function($scope,dailyService, $filter, $location,$rootScope,$routeParams ) {

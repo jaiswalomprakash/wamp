@@ -29,7 +29,7 @@ angular.module('myApp.services').factory("DailyService", function($resource,API_
             query: { method: "GET"},
             create: { method: "POST",url: API_BASE_URL+"dailyService/storeDailyRecords" },
             get: { method: "GET", url: API_BASE_URL+"dailyService/getDailyServiceById?service_id=:id" },
-            remove: { method: "DELETE", url: "/api/StudentsApi?id=:id" },
+            remove: { method: "GET", url: API_BASE_URL+"dailyService/deleteDailyServiceById?service_id=:id" },
             update: { method: "PUT", url: "/api/StudentsApi?id=:id" }
        });
     }

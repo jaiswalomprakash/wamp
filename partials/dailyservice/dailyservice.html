@@ -33,7 +33,7 @@
 							{{customer.itemDesc}}
 						</td>
 						<td data-title="'createDate'" sortable="'dateCreated'" filter="{ 'dateCreated': 'text' }">
-							{{customer.dateCreated}}
+							{{customer.dateCreated  | date: "yyyy-MM-dd"}}
 						</td>
 						<td data-title="'price'" sortable="'price'" filter="{ 'price': 'text' }">
 							{{customer.price}} Rs.
@@ -46,7 +46,8 @@
 						
 						<td data-title="'Action'" >
 						
-						<a  ui-sref="editDailyservice({id:customer.id})" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></button>
+						<a ui-sref="editDailyservice({id:customer.id})" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil orange"></i></button></a>
+						<a ng-click="deleteDailyservice(customer.id)" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-trash orange"></i></button></a>
 							<!--<a ng-click="viewDailyService(1)"><button class="btn  btn-success">View</button> <i class="glyphicon glyphicon-film"></i></a></a> -->
 						</td>
 					</tr>

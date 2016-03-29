@@ -93,8 +93,8 @@ myApp.controller('loginController', ['$scope', 'Login', '$location', '$rootScope
 					$http.defaults.headers.common['token'] =$rootScope.userInfo.token;	
 					$http.defaults.headers.common['serviceID'] =$rootScope.userInfo.services[0].serviceId;
 					$http.defaults.headers.common['userId'] =$rootScope.userInfo.userId;				  
-  				  //$location.path("/dashboard");
-				  $location.path("/addDailyservice");
+  				    $location.path("/dashboard");
+				 // $location.path("/addDailyservice");
 				  
 				}
 			}, function(errorResult) {
