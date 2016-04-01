@@ -20,7 +20,55 @@ angular.module('myApp.services').factory('DailyServiceById', function($resource,
 
  
 })
+angular.module('myApp.services').factory("NameService", function($resource, $filter,API_BASE_URL){
+  
+  function filterData(data, filter){
+    return $filter('filter')(data, filter)
+  }
+  
+  function orderData(data, params){
+    return params.sorting() ? $filter('orderBy')(data, params.orderBy()) : filteredData;
+  }
+  
+  function sliceData(data, params){
+    return data.slice((params.page() - 1) * params.count(), params.page() * params.count())
+  }
+  
+  function transformData(data,filter,params){
+    return sliceData( orderData( filterData(data,filter), params ), params);
+  }
+  
+  var service = {
+    cachedData:[],
+    getData:function($defer, params, filter){
+      if(service.cachedData.length>0){
+        console.log("using cached data")
+        var filteredData = filterData(service.cachedData,filter);
+        var transformedData = sliceData(orderData(filteredData,params),params);
+        params.total(filteredData.length)
+        $defer.resolve(transformedData);
+      }
+      else{
+		var resource = $resource(API_BASE_URL+'dailyService/getDailyRecords');
+		resource.get().$promise.then(function(data) {		
+		   var resp = angular.fromJson(data.dailyServices);           			
+		    angular.copy(resp,service.cachedData)
+			params.total(resp.length)
+			var filteredData = $filter('filter')(resp, filter);
+			var transformedData = transformData(resp,filter,params)				  
+		    $defer.resolve(transformedData);	
+	});
+		
+		
 
+		  
+		
+      }
+      
+    }
+  };
+  return service;  
+});
 
 // comman method to daily service 
 

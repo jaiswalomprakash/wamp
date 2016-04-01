@@ -49,13 +49,106 @@ myApp.config(function($stateProvider,$urlRouterProvider) {
   
 });
 
-myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$location', 'dataTable', '$stateParams', function($scope, myDailyService, $location, dataTable, $stateParams) {
+
+myApp.controller('GetDailyServiceController1', ['$scope', 'NameService', '$filter', '$location','$rootScope','$routeParams','$stateParams','ngTableParams', function($scope,NameService, $filter, $location,$rootScope,$routeParams,$stateParams,ngTableParams ) {
+	
+	
+	 var data = NameService.data;
+     var totalCollection=0;
+	 var totalExpenses=0;
+	 var total=0;
+    $scope.tableParams = new ngTableParams(
+      {
+        page: 1,            // show first page
+        count: 10,           // count per page
+        sorting: {name:'asc'}
+      },
+      {
+        total: 0, // length of data
+        getData: function($defer, params) {
+              NameService.getData($defer,params,$scope.filter);
+			
+			
+        }
+    });
+	
+	 	  
+			 angular.forEach($scope.tableParams.data, function (product) {
+                    if (product.quantity > 0) {
+                      
+                      console.log("test pme--------");
+                    }        
+                });
+     
+				$scope.totalCollection =	totalCollection;
+				$scope.totalExpenses =	totalExpenses;
+				$scope.total =	totalCollection-totalExpenses;
+
+    $scope.$watch("filter.$", function () {
+        $scope.tableParams.reload();
+		 console.log("data--jai --"+ $scope.tableParams.data.length);
+    });
+	
+	$scope.clearTableData = function(){
+    transactions = [];
+    $scope.output = {}
+    if ($scope.tableParams){
+            $scope.tableParams.reload();
+			
+    } 
+   }
+   	
+		$scope.deleterow = function(id) {		 
+		
+		 $scope.tableParams.data.splice(id, 1);
+			 for (var i = 0; i < $scope.tableParams.data.length; i++) {
+				
+             }
+		}
+   
+   	$scope.deleteDailyservice = function(id,index) {
+				 $scope.tableParams.data.splice(index, 1);
+				console.log("--------"+$scope.dailyserviceList);
+				  var deleteCustomer = confirm('Are you absolutely sure you want to delete?');
+				  if (deleteCustomer) {
+					  myDailyService.remove({id:id},function(result) {	
+					if (!result.error) {					
+						$location.path("/dailyservice");						
+						if ($location.path() === "/dailyservice") {
+							$route.reload();
+						} else {
+							$location.path("/dailyservice");
+						}
+											
+					}
+					}, function(errorResult) {
+						// do something on error	
+						//$scope.login = {"email":"Email", "password": "Password"};				
+						console.log("error op "+errorResult.status);
+						if(errorResult.status === 500) {  
+							$location.path("/dailyservice");
+							$scope.error = errorResult.data.statusMessage;				
+						}
+						
+					});
+					  
+				  }
+				
+				
+			}
+
+	
+}]);
+
+myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$location', '$route','dataTable', '$stateParams','ngTableParams','$filter', function($scope, myDailyService, $location,$route,dataTable, $stateParams,ngTableParams,$filter) {
     var totalCollection=0;
 	var totalExpenses=0;
 	var total=0;
+	
 	myDailyService.query({},function(result) {	
+	
 				$scope.data = result;
-				
+				$scope.tableParams;
 				/* date caluculation */			
 				if($scope.today ==null){
 					$scope.today = new Date();	
@@ -90,14 +183,27 @@ myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$locat
 					totalCollection += result.dailyServices[i].price
 					}else if(result.dailyServices[i].type=="2"){
 						totalExpenses += result.dailyServices[i].price
-					}
-					
-				}
-				
+					}					
+				}				
 				$scope.totalCollection =	totalCollection;
 				$scope.totalExpenses =	totalExpenses;
 				$scope.total =	totalCollection-totalExpenses;
-				  dataTable.render($scope, '', "dailyserviceList", result.dailyServices);
+				//dataTable.render($scope, '', "dailyserviceList", result.dailyServices);
+				 $scope.tableParams = new ngTableParams({
+					page: 1,
+					count: 10
+				}, {
+					total: result.dailyServices.length,
+					getData: function ($defer, params) {
+						    $scope.data = params.sorting() ? $filter('orderBy')(result.dailyServices, params.orderBy()) : result;
+                            $scope.data = params.filter() ? $filter('filter')($scope.data, params.filter()) : $scope.data;
+                            $scope.data = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                            $defer.resolve($scope.data);
+					//	$defer.resolve(result.dailyServices.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+					}
+				});
+				
+				
 				}
 			}, function(errorResult) {
 				// do something on error	
@@ -108,17 +214,16 @@ myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$locat
 				}
 				
 			});	
-		
-			$scope.deleteDailyservice = function(id) {
-				
-				console.log("--------"+$scope.dailyserviceList);
+			  $scope.$watch("filter.$", function () {
+			//	$scope.tableParams.reload();
+				console.log("-------i am in filter-----");
+			 });
+			$scope.deleteDailyservice = function(id,idx) {				
 				  var deleteCustomer = confirm('Are you absolutely sure you want to delete?');
 				  if (deleteCustomer) {
 					  myDailyService.remove({id:id},function(result) {	
 					if (!result.error) {					
-						$location.path("/dailyservice");						
-						$location.replace();
-						
+						$scope.tableParams.data.splice(idx, 1);											
 					}
 					}, function(errorResult) {
 						// do something on error	
