@@ -144,36 +144,18 @@ myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$locat
     var totalCollection=0;
 	var totalExpenses=0;
 	var total=0;
+	$scope.counter = 0;
 	
-	myDailyService.query({},function(result) {	
-	
-				$scope.data = result;
-				$scope.tableParams;
-				/* date caluculation */			
-				if($scope.today ==null){
-					$scope.today = new Date();	
+	if($scope.today ==null){
+					
 				}else{
 					$scope.today =$scope.today.setMonth($scope.today - 1);
 				}
-				
-				$scope.month = $scope.today.getMonth()+1 ;
-				console.log("$scope.today  $scope.month ---"+$scope.month);
-				var previousDate = new Date()
-				previousDate.setDate(previousDate.getDate() - 1)
-				var nextDate = new Date()
-				nextDate.setDate(nextDate.getDate() + 1)
-				var previousMonth = new Date()
-				previousMonth.setMonth(previousMonth.getMonth() - 1);
-				var nextMonth = new Date()
-				nextMonth.setMonth(nextMonth.getMonth() + 1);
-				var year = new Date()
-				year.setFullYear(year.getFullYear())
-				$scope.cdate = new Date();
-				$scope.pday = previousDate;
-				$scope.nday = nextDate;
-				$scope.pmonth = previousMonth;
-				$scope.nmonth = nextMonth;
-				$scope.cyear = year;				
+	
+	myDailyService.query({month:$scope.counter},function(result) {	
+	
+				$scope.data = result;
+				$scope.tableParams;
 				if (!result.error) {
   				  //$location.path("/dashboard");
 				//  $location.path("/addDailyservice");
@@ -215,9 +197,75 @@ myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$locat
 				
 			});	
 			  $scope.$watch("filter.$", function () {
-			//	$scope.tableParams.reload();
-				console.log("-------i am in filter-----");
+			
 			 });
+			 
+			
+			 $scope.getCurrentMonth = function() {
+				 var myDate = new Date();
+				var newdate = new Date(myDate);
+				newdate.setMonth(myDate.getMonth()-$scope.counter);
+				console.log("---------newdate----"+newdate);
+				return $scope.today =$filter('date')(newdate, 'MMMM yyyy');	
+				
+			 }
+			 
+			  $scope.getPreviousDailyservice = function() {
+				$scope.counter--;
+				var myDate = new Date();
+				var newdate = new Date(myDate);
+				newdate.setMonth(myDate.getMonth()-$scope.counter);
+				console.log("---------newdate----"+newdate);
+				 $scope.today =$filter('date')(newdate, 'MMMM yyyy');	
+				 
+				 	
+	myDailyService.query({month:$scope.counter},function(result) {	
+	
+				$scope.data = result;
+				$scope.tableParams;
+				if (!result.error) {
+  				  //$location.path("/dashboard");
+				//  $location.path("/addDailyservice");
+				for(var i = 0; i < result.dailyServices.length; i++){
+					console.log("type----"+result.dailyServices[i].type);
+					if(result.dailyServices[i].type=="1")	{
+					totalCollection += result.dailyServices[i].price
+					}else if(result.dailyServices[i].type=="2"){
+						totalExpenses += result.dailyServices[i].price
+					}					
+				}				
+				$scope.totalCollection =	totalCollection;
+				$scope.totalExpenses =	totalExpenses;
+				$scope.total =	totalCollection-totalExpenses;
+				
+				 $scope.data =  result.dailyServices;
+				 $scope.tableParams.reload();
+				
+				}
+			}, function(errorResult) {
+				// do something on error	
+				//$scope.login = {"email":"Email", "password": "Password"};				
+				console.log("error op "+errorResult.status);
+				if(errorResult.status === 500) {  
+					$scope.error = errorResult.data.statusMessage;				
+				}
+				
+			});	
+				 
+				 
+			 }
+			 
+			 
+			   $scope.getNextDailyservice = function() {
+				$scope.counter--;
+				var myDate = new Date();
+				var newdate = new Date(myDate);
+				newdate.setMonth(myDate.getMonth()-$scope.counter);
+				console.log("---------newdate----"+newdate);
+				 $scope.today =$filter('date')(newdate, 'MMMM yyyy');	
+			 }
+			 
+			 
 			$scope.deleteDailyservice = function(id,idx) {				
 				  var deleteCustomer = confirm('Are you absolutely sure you want to delete?');
 				  if (deleteCustomer) {

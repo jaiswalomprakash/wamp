@@ -67,13 +67,14 @@ angular.module('myApp.services').factory("NameService", function($resource, $fil
       
     }
   };
+  
   return service;  
 });
 
 // comman method to daily service 
 
 angular.module('myApp.services').factory("DailyService", function($resource,API_BASE_URL) {
-          return $resource(API_BASE_URL+"dailyService/getDailyRecords", {}, {
+          return $resource(API_BASE_URL+"dailyService/getDailyRecords", {month:'@month'}, {
             query: { method: "GET"},
             create: { method: "POST",url: API_BASE_URL+"dailyService/storeDailyRecords" },
             get: { method: "GET", url: API_BASE_URL+"dailyService/getDailyServiceById?service_id=:id" },
