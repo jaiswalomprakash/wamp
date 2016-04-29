@@ -19,7 +19,7 @@ var myApp = angular.module('myApp', [
   'customers'
 ]);
 
-//9611886781 purnima  poornma.v@
+//9611886781 purnima  poornma.v@prabhavathibuilders.com
 //myApp.constant('APP_BASE_URL',"http://api.tangerine.io/inboundhtml/");
 myApp.constant('API_BASE_URL',"http://localhost:8080/mywebs/");
 //myApp.constant('API_BASE_URL',"http://profx.com:8080/tomcat_manager/");
@@ -223,7 +223,7 @@ myApp.directive('setHeight', function($window){
   return{
     link: function(scope, element, attrs){
 		console.log("inner height "+$window.innerHeight);
-        element.css('min-height', ($window.innerHeight-206)+ 'px');
+        element.css('min-height', ($window.innerHeight-140)+ 'px');
         //element.height($window.innerHeight/3);
     }
   }

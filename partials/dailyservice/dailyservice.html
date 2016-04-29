@@ -1,10 +1,8 @@
 <div class="row">
 <div class="span12"  ng-controller="GetDailyServiceController">
-  
-    <div class="widget widget-table action-table">
-	<div class="col-lg-12 col-sm-12 col-xs-12 widget-header">
+  <div class="col-lg-12 col-sm-12 col-xs-12 widget-header">
 		
-		<a><i ng-click="getPreviousDailyservice()" class="glyphicon glyphicon-chevron-left"></i></a>
+		<a ui-sref="getPreviousDailyservice({startDate:getCurrentMonth()})"><i class="glyphicon glyphicon-chevron-left"></i></a>
 		 <a ui-sref="addDailyservice" ><i class="glyphicon glyphicon-plus-sign"></i><h3>Montly Balance Sheet -{{getCurrentMonth()}}</h3> </a>
 		<a><i ng-click="getNextDailyservice()" class="glyphicon glyphicon-chevron-right"></i></a>
 		
@@ -12,6 +10,8 @@
 		<a ui-sref="addDailyservice"><!--<i class="icon-bar-chart"></i><h3> Add New Data </h3> </a> 
 		</div> -->
 	</div>
+    <div class="widget widget-table action-table">
+	
 	<div class="col-lg-12">
 	<div class="col-lg-2 col-sm-2">
 			<span class="label label-success">Total Collection  {{ totalCollection }} Rs</span>

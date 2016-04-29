@@ -44,15 +44,30 @@ myApp.config(function($stateProvider,$urlRouterProvider) {
   });
   
    
+   $stateProvider.state('getPreviousDailyservice', {
+	url: '/dailyservice/:startDate',	
+    templateUrl: 'partials/dailyservice/dailyservice.html',
+	controller: function($scope, $stateParams){
+        $scope.startDate = $stateParams.startDate;
+		console.log("$routeParams.startDate---------------    "+$stateParams.startDate );
+		console.log("$routeParams.counter---------------    "+$scope.counter );
+      },
+	data:{
+		auth:true
+	},
+	ncyBreadcrumb: {	
+    label: 'Daily Expense & Collection'
+  }
+  });
+   
+   
   
  
   
 });
 
 
-myApp.controller('GetDailyServiceController1', ['$scope', 'NameService', '$filter', '$location','$rootScope','$routeParams','$stateParams','ngTableParams', function($scope,NameService, $filter, $location,$rootScope,$routeParams,$stateParams,ngTableParams ) {
-	
-	
+myApp.controller('GetDailyServiceController1', ['$scope', 'NameService', '$filter', '$location','$rootScope','$routeParams','$stateParams','ngTableParams', function($scope,NameService, $filter, $location,$rootScope,$routeParams,$stateParams,ngTableParams ) {	
 	 var data = NameService.data;
      var totalCollection=0;
 	 var totalExpenses=0;
@@ -66,16 +81,13 @@ myApp.controller('GetDailyServiceController1', ['$scope', 'NameService', '$filte
       {
         total: 0, // length of data
         getData: function($defer, params) {
-              NameService.getData($defer,params,$scope.filter);
-			
-			
-        }
+              NameService.getData($defer,params,$scope.filter);			
+      }
     });
 	
 	 	  
 			 angular.forEach($scope.tableParams.data, function (product) {
                     if (product.quantity > 0) {
-                      
                       console.log("test pme--------");
                     }        
                 });
@@ -139,37 +151,36 @@ myApp.controller('GetDailyServiceController1', ['$scope', 'NameService', '$filte
 
 	
 }]);
-
-myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$location', '$route','dataTable', '$stateParams','ngTableParams','$filter', function($scope, myDailyService, $location,$route,dataTable, $stateParams,ngTableParams,$filter) {
-    var totalCollection=0;
+function addTotal($scope,dailyServices){
+	var totalCollection=0;
 	var totalExpenses=0;
 	var total=0;
-	$scope.counter = 0;
-	
-	if($scope.today ==null){
-					
-				}else{
-					$scope.today =$scope.today.setMonth($scope.today - 1);
-				}
-	
-	myDailyService.query({month:$scope.counter},function(result) {	
-	
-				//$scope.data = result;
-				$scope.tableParams;
-				if (!result.error) {
-  				  //$location.path("/dashboard");
-				//  $location.path("/addDailyservice");
-				for(var i = 0; i < result.dailyServices.length; i++){
-					console.log("type----"+result.dailyServices[i].type);
-					if(result.dailyServices[i].type=="1")	{
-					totalCollection += result.dailyServices[i].price
-					}else if(result.dailyServices[i].type=="2"){
-						totalExpenses += result.dailyServices[i].price
+		for(var i = 0; i < dailyServices.length; i++){
+					console.log("type----"+dailyServices[i].type);
+					if(dailyServices[i].type=="1")	{
+					totalCollection += dailyServices[i].price
+					}else if(dailyServices[i].type=="2"){
+						totalExpenses += dailyServices[i].price
 					}					
 				}				
 				$scope.totalCollection =	totalCollection;
 				$scope.totalExpenses =	totalExpenses;
 				$scope.total =	totalCollection-totalExpenses;
+}
+
+
+myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$location', '$route','dataTable', '$stateParams','ngTableParams','$filter', function($scope, myDailyService, $location,$route,dataTable, $stateParams,ngTableParams,$filter) {
+   
+	$scope.counter = 0;	
+	if($scope.today ==null){					
+				}else{
+					$scope.today =$scope.today.setMonth($scope.today - 1);
+				}
+	
+	myDailyService.query({month:$scope.counter},function(result) {	
+				$scope.tableParams;
+				if (!result.error) {  				 
+				addTotal($scope, result.dailyServices);
 				//dataTable.render($scope, '', "dailyserviceList", result.dailyServices);
 				 $scope.tableParams = new ngTableParams({
 					page: 1,
@@ -181,6 +192,7 @@ myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$locat
                             $scope.data = params.filter() ? $filter('filter')($scope.data, params.filter()) : $scope.data;
                             $scope.data = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
                             $defer.resolve($scope.data);
+							console.log("page"+params.page());
 					//	$defer.resolve(result.dailyServices.slice((params.page() - 1) * params.count(), params.page() * params.count()));
 					}
 				});
@@ -196,13 +208,8 @@ myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$locat
 				}
 				
 			});	
-			  $scope.$watch("filter.$", function () {
-			
-			 });
 			 
-			
-			 $scope.getCurrentMonth = function() {
-			
+				$scope.getCurrentMonth = function() {			
 				var myDate = new Date();
 				var newdate = new Date(myDate);
 				newdate.setMonth(myDate.getMonth()-$scope.counter);
@@ -211,7 +218,7 @@ myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$locat
 				
 			 }
 			 
-			  $scope.getPreviousDailyservice = function() {
+			  $scope.getPreviousDailyservice = function($defer) {
 				  
 				
 				
@@ -222,18 +229,25 @@ myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$locat
 				console.log("---------newdate----"+newdate);
 				$scope.today =$filter('date')(newdate, 'MMMM yyyy');
 				
-				myDailyService.query({month:$scope.counter},function(result) {	
-				 		 $scope.data.forEach(function (old) {
-							var index = $scope.data.indexOf(old);
+				myDailyService.query({month:$scope.counter},function(result) {
+						
+				for (var i = 0; i < $scope.tableParams.data.length; i++) {
+						var index = $scope.data.indexOf($scope.tableParams.data[i]);
 							console.log("---------index----"+index);
-								$scope.tableParams.data.splice(index, 1);	
-            });
+							//$scope.tableParams.data.splice(index, 1);							
+							//$scope.tableParams.reload();
+												
+							// $scope.tableParams.reload();
+					  }
+				 		
 				if (!result.error) {
-  				  $scope.tableParams.total(result.dailyServices.length);
+  				  
+				   $scope.data = result.dailyServices;
+				 $scope.tableParams.reload();			
 				for(var i = 0; i < result.dailyServices.length; i++){
 					console.log("type----"+result.dailyServices[i].type);
 					
-					$scope.tableParams.data.push(result.dailyServices[i]);
+				//	$scope.tableParams.data.push(result.dailyServices[i]);
 					if(result.dailyServices[i].type=="1")	{
 					totalCollection += result.dailyServices[i].price
 					}else if(result.dailyServices[i].type=="2"){
@@ -245,6 +259,7 @@ myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$locat
 				$scope.total =	totalCollection-totalExpenses;				
 				//$scope.tableParams.data =  result.dailyServices;
 				
+                 
 					
 				}
 			}, function(errorResult) {
@@ -258,40 +273,7 @@ myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$locat
 			
 				});
 				
-			/*	myDailyService.query({month:$scope.counter},function(result) {					
-				$scope.tableParams.data ={};
-			    $scope.tableParams.data = result.dailyServices;
-			    $scope.tableParams.reload();
-			    $scope.tableParams.total(result.dailyServices.length);				
-				console.log("$scope.tableParams.total----------- "+$scope.tableParams.total());
-				if (!result.error) {
-  				  //$location.path("/dashboard");
-				//  $location.path("/addDailyservice");
-				for(var i = 0; i < result.dailyServices.length; i++){
-					console.log("type----"+result.dailyServices[i].type);
-					if(result.dailyServices[i].type=="1")	{
-					totalCollection += result.dailyServices[i].price
-					}else if(result.dailyServices[i].type=="2"){
-						totalExpenses += result.dailyServices[i].price
-					}					
-				}				
-				$scope.totalCollection =	totalCollection;
-				$scope.totalExpenses =	totalExpenses;
-				$scope.total =	totalCollection-totalExpenses;				
-				//$scope.tableParams.data =  result.dailyServices;
-				
-					
-				}
-			}, function(errorResult) {
-				// do something on error	
-				//$scope.login = {"email":"Email", "password": "Password"};				
-				console.log("error op "+errorResult.status);
-				if(errorResult.status === 500) {  
-					$scope.error = errorResult.data.statusMessage;				
-				}
-				
-			});	*/
-				 
+			
 				 
 			 }
 			 
