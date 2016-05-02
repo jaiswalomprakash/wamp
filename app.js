@@ -223,7 +223,7 @@ myApp.directive('setHeight', function($window){
   return{
     link: function(scope, element, attrs){
 		console.log("inner height "+$window.innerHeight);
-        element.css('min-height', ($window.innerHeight-140)+ 'px');
+        element.css('min-height', ($window.innerHeight-130)+ 'px');
         //element.height($window.innerHeight/3);
     }
   }
@@ -234,6 +234,8 @@ myApp.filter('currentdate',['$filter',  function($filter) {
         return $filter('date')(new Date(), 'dd, MMMM yyyy hh:mm:ss');
     };
 }])
+
+
 
 //For top sub menu (look others menu)
 $(function () {

@@ -9,7 +9,9 @@ myApp.config(function($stateProvider,$locationProvider) {
     templateUrl: 'partials/dashboard/dashboard.html',	
 	ncyBreadcrumb: {
     label: 'Home page'
-  },
+  },controller: function($rootScope){      
+		$rootScope.dateCounter =0;
+      },
 	data:{
 		auth:true
 	}

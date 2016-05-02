@@ -2,9 +2,9 @@
 <div class="span12"  ng-controller="GetDailyServiceController">
   <div class="col-lg-12 col-sm-12 col-xs-12 widget-header">
 		
-		<a ui-sref="getPreviousDailyservice({startDate:getCurrentMonth()})"><i class="glyphicon glyphicon-chevron-left"></i></a>
+		<a ui-sref="getPreviousDailyservice({startDate:dateCounter})"><i class="glyphicon glyphicon-chevron-left"></i></a>
 		 <a ui-sref="addDailyservice" ><i class="glyphicon glyphicon-plus-sign"></i><h3>Montly Balance Sheet -{{getCurrentMonth()}}</h3> </a>
-		<a><i ng-click="getNextDailyservice()" class="glyphicon glyphicon-chevron-right"></i></a>
+		<a ui-sref="geNextDailyservice({startDate:dateCounter})"><i class="glyphicon glyphicon-chevron-right"></i></a>
 		
 		<!--<div class="col-lg-5 col-sm-12 col-xs-10">
 		<a ui-sref="addDailyservice"><!--<i class="icon-bar-chart"></i><h3> Add New Data </h3> </a> 

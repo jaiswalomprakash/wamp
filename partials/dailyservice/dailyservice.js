@@ -44,13 +44,17 @@ myApp.config(function($stateProvider,$urlRouterProvider) {
   });
   
    
-   $stateProvider.state('getPreviousDailyservice', {
-	url: '/dailyservice/:startDate',	
+   $stateProvider.state('getPreviousDailyservice', {	    
+	url: '/getPrevious/:startDate',	
     templateUrl: 'partials/dailyservice/dailyservice.html',
-	controller: function($scope, $stateParams){
-        $scope.startDate = $stateParams.startDate;
-		console.log("$routeParams.startDate---------------    "+$stateParams.startDate );
-		console.log("$routeParams.counter---------------    "+$scope.counter );
+	controller: function($rootScope){      
+		
+		if($rootScope.dateCounter ==null || typeof  $rootScope.dateCounter =='undefined' ||  $rootScope.dateCounter === Number.NaN ){	
+		    $rootScope.dateCounter =0;
+		}else{
+			$rootScope.dateCounter--;
+		}
+		console.log("after $rootScope.dateCounter---------------    "+$rootScope.dateCounter );
       },
 	data:{
 		auth:true
@@ -60,6 +64,25 @@ myApp.config(function($stateProvider,$urlRouterProvider) {
   }
   });
    
+    $stateProvider.state('geNextDailyservice', {	    
+	url: '/getNext/:startDate',	
+    templateUrl: 'partials/dailyservice/dailyservice.html',
+	controller: function($rootScope){      
+		console.log("$rootScope.dateCounter---------------    "+$rootScope.dateCounter );
+		if($rootScope.dateCounter ==null || typeof  $rootScope.dateCounter =='undefined' ||  $rootScope.dateCounter === Number.NaN ){	
+		    $rootScope.dateCounter =0;
+		}else{
+			$rootScope.dateCounter++;
+		}
+		console.log("after $rootScope.dateCounter---------------    "+$rootScope.dateCounter );
+      },
+	data:{
+		auth:true
+	},
+	ncyBreadcrumb: {	
+    label: 'Daily Expense & Collection'
+  }
+  });
    
   
  
@@ -169,17 +192,14 @@ function addTotal($scope,dailyServices){
 }
 
 
-myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$location', '$route','dataTable', '$stateParams','ngTableParams','$filter', function($scope, myDailyService, $location,$route,dataTable, $stateParams,ngTableParams,$filter) {
-   
-	$scope.counter = 0;	
-	if($scope.today ==null){					
-				}else{
-					$scope.today =$scope.today.setMonth($scope.today - 1);
-				}
-	
-	myDailyService.query({month:$scope.counter},function(result) {	
+myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$location', '$route','dataTable', '$stateParams','ngTableParams','$filter','$rootScope', function($scope, myDailyService, $location,$route,dataTable, $stateParams,ngTableParams,
+$filter,$rootScope) {		
+	if($rootScope.dateCounter ==null || typeof  $rootScope.dateCounter =='undefined' ||  $rootScope.dateCounter === Number.NaN ){	
+		    $rootScope.dateCounter =0;
+		}		
+	myDailyService.query({month:$rootScope.dateCounter},function(result) {	
 				$scope.tableParams;
-				if (!result.error) {  				 
+				if (!result.error && result.dailyServices) {  				 
 				addTotal($scope, result.dailyServices);
 				//dataTable.render($scope, '', "dailyserviceList", result.dailyServices);
 				 $scope.tableParams = new ngTableParams({
@@ -212,9 +232,9 @@ myApp.controller('GetDailyServiceController', ['$scope', 'DailyService', '$locat
 				$scope.getCurrentMonth = function() {			
 				var myDate = new Date();
 				var newdate = new Date(myDate);
-				newdate.setMonth(myDate.getMonth()-$scope.counter);
-				console.log("---------newdate----"+newdate);
-				return $scope.today =$filter('date')(newdate, 'MMMM yyyy');	
+				console.log("$rootScope.dateCounter----ctr"+$rootScope.dateCounter);	
+				newdate.setMonth(myDate.getMonth()+($rootScope.dateCounter));			
+				return $filter('date')(newdate, 'MMMM yyyy');	
 				
 			 }
 			 
@@ -459,8 +479,19 @@ myApp.controller('deleteDailyserviceController', ['$scope', 'DailyService', '$fi
 }]);
 
 myApp.controller('newDailyserviceController', ['$scope', 'DailyService', '$filter', '$location','$rootScope','$routeParams', function($scope,dailyService, $filter, $location,$rootScope,$routeParams ) {
-	console.log("---test33----"+$filter("currentdate")())	;			
-	$scope.dailyservice = {"dateCreated":$filter("currentdate")(),"price":1500,"type":""};
+	console.log("---test33----"+$rootScope.dateCounter)	;
+ if($rootScope.dateCounter ==null || typeof  $rootScope.dateCounter =='undefined' ||  $rootScope.dateCounter === Number.NaN ){	
+	$scope.dailyservice = {"dateCreated":$filter("currentdate")(),"price":1500,"type":""};  				 
+  }else{
+				var myDate = new Date();
+				var newdate = new Date(myDate);
+				console.log("$rootScope.dateCounter----ctr"+$rootScope.dateCounter);	
+				newdate.setMonth(myDate.getMonth()+($rootScope.dateCounter));	
+				$scope.dailyservice = {"dateCreated":$filter('date')(newdate, 'dd, MMMM yyyy hh:mm:ss'),"price":1500,"type":""}; 
+  }
+
+	
+	
 //	addnewDailyServcie($scope,$rootScope,$location,$filter,dailyService);
 $scope.addDailyservice = function() {
 					addnewDailyServcie($scope,$rootScope,$location,$filter,dailyService);
